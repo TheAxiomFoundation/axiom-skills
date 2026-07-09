@@ -35,7 +35,7 @@ calculations against the production API. Set `AXIOM_API_KEY` in your environment
   axiom-design; "encode a provision" → encode-cli). Humans don't need to remember
   the catalog — the model does.
 - **The dashboard** — live at https://axiom-skills.vercel.app — is the visual layer for humans: what exists,
-  which bundle carries it, and search. It renders `catalog.json`, generated from the
+  which bundle carries it, and search. It renders `data.json`, generated from the
   same manifest the plugin uses, so it can't drift.
 - **Updates flow automatically** — bump versions here; installed plugins update on
   marketplace refresh.

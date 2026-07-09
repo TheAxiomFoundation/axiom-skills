@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Builds dashboard/catalog.json from .claude-plugin/marketplace.json + skill files.
+// Builds dashboard/data.json from .claude-plugin/marketplace.json + skill files.
 // Usage: node scripts/build-catalog.mjs [--check]
 // --check: exit 1 if the committed catalog differs from the freshly built one (CI drift guard).
 
@@ -88,16 +88,16 @@ const catalog = {
 };
 
 const out = JSON.stringify(catalog, null, 2) + "\n";
-const target = join(root, "dashboard/catalog.json");
+const target = join(root, "dashboard/data.json");
 
 if (process.argv.includes("--check")) {
   const current = existsSync(target) ? readFileSync(target, "utf8") : "";
   if (current !== out) {
-    console.error("dashboard/catalog.json is stale — run: node scripts/build-catalog.mjs");
+    console.error("dashboard/data.json is stale — run: node scripts/build-catalog.mjs");
     process.exit(1);
   }
   console.log("catalog up to date");
 } else {
   writeFileSync(target, out);
-  console.log(`wrote dashboard/catalog.json (${catalog.skills.length} skills, ${catalog.bundles.length} bundles)`);
+  console.log(`wrote dashboard/data.json (${catalog.skills.length} skills, ${catalog.bundles.length} bundles)`);
 }

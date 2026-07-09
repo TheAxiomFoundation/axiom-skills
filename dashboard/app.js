@@ -82,7 +82,7 @@ function wireCopy(scope) {
   });
 }
 
-fetch("catalog.json")
+fetch("data.json")
   .then((r) => r.json())
   .then((catalog) => {
     $("counts").textContent =
@@ -170,5 +170,5 @@ fetch("catalog.json")
   })
   .catch(() => {
     $("skills").innerHTML =
-      "<p class='empty'>catalog.json not found — run <code>node scripts/build-catalog.mjs</code></p>";
+      "<p class='empty'>data.json not found — run <code>node scripts/build-catalog.mjs</code></p>";
   });
