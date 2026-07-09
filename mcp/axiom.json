@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "axiom": {
+      "command": "npx",
+      "args": ["-y", "@axiom-foundation/mcp"],
+      "env": {
+        "AXIOM_API_BASE_URL": "${AXIOM_API_BASE_URL:-https://axiom-api-eta.vercel.app/v1}",
+        "AXIOM_API_KEY": "${AXIOM_API_KEY:-}"
+      }
+    }
+  }
+}

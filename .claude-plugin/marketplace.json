@@ -1,0 +1,63 @@
+{
+  "$schema": "https://claude.ai/schemas/plugin-marketplace.json",
+  "name": "axiom-skills",
+  "version": "0.1.0",
+  "description": "Shared agent/skill infrastructure for the Axiom Foundation — pipeline knowledge, craft conventions, and (later) operational agents, reusable across every Axiom repo and harness",
+  "owner": {
+    "name": "Axiom Foundation",
+    "url": "https://github.com/TheAxiomFoundation"
+  },
+  "plugins": [
+    {
+      "name": "essential",
+      "description": "Baseline for every Axiom repo: RuleSpec format, engine usage, Axiom writing voice, and the Axiom MCP server",
+      "category": "core",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "skills": [
+        "./skills/rulespec-format",
+        "./skills/engine-api",
+        "./skills/axiom-writing"
+      ],
+      "mcpServers": "./mcp/axiom.json"
+    },
+    {
+      "name": "encoding",
+      "description": "For pipeline contributors: encode CLI + gauntlet discipline, oracle/parity validation",
+      "category": "pipeline",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "skills": [
+        "./skills/encode-cli",
+        "./skills/oracles-usage"
+      ]
+    },
+    {
+      "name": "craft",
+      "description": "For demo and app builders: Axiom design/demo conventions and writing voice",
+      "category": "craft",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "skills": [
+        "./skills/axiom-design",
+        "./skills/axiom-writing"
+      ]
+    },
+    {
+      "name": "complete",
+      "description": "Everything in the catalog",
+      "category": "core",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "skills": [
+        "./skills/rulespec-format",
+        "./skills/engine-api",
+        "./skills/encode-cli",
+        "./skills/oracles-usage",
+        "./skills/axiom-writing",
+        "./skills/axiom-design"
+      ],
+      "mcpServers": "./mcp/axiom.json"
+    }
+  ]
+}

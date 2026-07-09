@@ -1,0 +1,111 @@
+{
+  "marketplace": {
+    "name": "axiom-skills",
+    "version": "0.1.0",
+    "description": "Shared agent/skill infrastructure for the Axiom Foundation — pipeline knowledge, craft conventions, and (later) operational agents, reusable across every Axiom repo and harness"
+  },
+  "bundles": [
+    {
+      "name": "essential",
+      "description": "Baseline for every Axiom repo: RuleSpec format, engine usage, Axiom writing voice, and the Axiom MCP server",
+      "category": "core",
+      "skills": [
+        "rulespec-format",
+        "engine-api",
+        "axiom-writing"
+      ],
+      "mcp": true
+    },
+    {
+      "name": "encoding",
+      "description": "For pipeline contributors: encode CLI + gauntlet discipline, oracle/parity validation",
+      "category": "pipeline",
+      "skills": [
+        "encode-cli",
+        "oracles-usage"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "craft",
+      "description": "For demo and app builders: Axiom design/demo conventions and writing voice",
+      "category": "craft",
+      "skills": [
+        "axiom-design",
+        "axiom-writing"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "complete",
+      "description": "Everything in the catalog",
+      "category": "core",
+      "skills": [
+        "rulespec-format",
+        "engine-api",
+        "encode-cli",
+        "oracles-usage",
+        "axiom-writing",
+        "axiom-design"
+      ],
+      "mcp": true
+    }
+  ],
+  "skills": [
+    {
+      "path": "./skills/axiom-design",
+      "name": "axiom-design",
+      "description": "ALWAYS LOAD THIS SKILL before building or modifying any Axiom demo, dashboard, web app, or frontend surface — new demos especially. Triggers: \"new demo\", \"demo app\", \"dashboard\", \"landing page\", \"frontend\", \"web app\", \"Vercel\", \"deploy the demo\", \"UI\", \"widget\", \"embed\", \"calculator\", \"graph viewer\", \"add analytics\", \"mobile\".",
+      "bundles": [
+        "craft",
+        "complete"
+      ]
+    },
+    {
+      "path": "./skills/axiom-writing",
+      "name": "axiom-writing",
+      "description": "ALWAYS LOAD THIS SKILL before writing anything public-facing or partner-facing for Axiom — READMEs, launch/blog posts, docs pages, partner emails, coverage claims, demo copy, PR descriptions on public repos, grant text. Triggers: \"write a blog post\", \"announcement\", \"launch copy\", \"README\", \"partner email\", \"coverage page\", \"describe validation\", \"docs page\", \"marketing copy\", \"landing page text\", \"grant application\", \"one-pager\".",
+      "bundles": [
+        "essential",
+        "craft",
+        "complete"
+      ]
+    },
+    {
+      "path": "./skills/encode-cli",
+      "name": "encode-cli",
+      "description": "ALWAYS LOAD THIS SKILL before running or debugging the axiom-encode pipeline — encoding a provision, validating, applying, or investigating a failed run. Triggers: \"encode a provision\", \"axiom-encode\", \"encoding run\", \"gauntlet\", \"proof-validate\", \"eval-suite\", \"apply manifest\", \"guard-generated\", \"source staleness\", \"repair.json\", \"encoding backend\", \"codex\", \"run log\", \"readiness gates\", \"oracle coverage\", \"encode --apply\".",
+      "bundles": [
+        "encoding",
+        "complete"
+      ]
+    },
+    {
+      "path": "./skills/engine-api",
+      "name": "engine-api",
+      "description": "ALWAYS LOAD THIS SKILL before compiling or executing RuleSpec, calling the axiom-rules-engine from Rust/Python/CLI, or debugging engine output. Triggers: \"compile rulespec\", \"run-compiled\", \"compiled artifact\", \"axiom-rules-engine\", \"axiom-rules\", \"explain trace\", \"dense\", \"batch execution\", \"CompiledDenseProgram\", \"PyO3\", \"WASM\", \"check-sources\", \"durable ID\", \"cross-period\", \"lifetime reduction\", \"runtime package\", \"execution request\".",
+      "bundles": [
+        "essential",
+        "complete"
+      ]
+    },
+    {
+      "path": "./skills/oracles-usage",
+      "name": "oracles-usage",
+      "description": "ALWAYS LOAD THIS SKILL before running parity/validation comparisons or interpreting oracle results. Covers axiom-oracles adapters, the compare CLI, and the traps. Triggers: \"parity\", \"oracle\", \"compare against PolicyEngine\", \"TAXSIM\", \"UKMOD\", \"EUROMOD\", \"SOUTHMOD\", \"ACCESS NYC\", \"mismatch\", \"golden cases\", \"contract cases\", \"populace\", \"Enhanced CPS\", \"validation dashboard\", \"triangulation\", \"conformance\".",
+      "bundles": [
+        "encoding",
+        "complete"
+      ]
+    },
+    {
+      "path": "./skills/rulespec-format",
+      "name": "rulespec-format",
+      "description": "ALWAYS LOAD THIS SKILL before reading, writing, reviewing, or debugging any RuleSpec YAML in a rulespec-* repo. Covers the rulespec/v1 module format, durable legal IDs, companion tests, source verification, imports, program compose specs, and the governance machinery (signed manifests, ratcheted debt files). Triggers: \"rulespec\", \"encode\", \"rule module\", \"module kind\", \"composition\", \"durable legal ID\", \"companion test\", \".test.yaml\", \"source_verification\", \"corpus_citation_path\", \"imports\", \"program spec\", \"acknowledged_incomplete\", \"encoding manifest\", \"known-validation-gaps\", \"money atom\", \"provision\", \"statute YAML\", \"regulation YAML\", any file under rulespec-us/, rulespec-uk/, rulespec-ca/.",
+      "bundles": [
+        "essential",
+        "complete"
+      ]
+    }
+  ]
+}
