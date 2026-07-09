@@ -65,6 +65,14 @@ imports:
   `known-validation-gaps.yaml`, `known-missing-money-atoms.yaml`. If your change fixes
   a listed gap, remove the entry in the same PR.
 
+## Repo hygiene (from the rulespec repos' own agent notes)
+
+**Do:** encodings under `statutes/`, `regulations/`, or `policies/`; tests beside
+each encoding as `.test.yaml`; only source-registry/manifest metadata under `sources/`.
+**Do not:** add singular rule roots; separate parameter or test-fixture files;
+generated formula artifacts; generated source payloads in Git; unrelated-jurisdiction
+materials.
+
 ## Review checklist
 
 1. Path/durable-ID matches the actual citation; companion test exists.

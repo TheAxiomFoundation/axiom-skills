@@ -18,8 +18,8 @@ enable the plugins on first open.
 
 | Bundle | Contents | Who |
 |---|---|---|
-| `essential` | rulespec-format, engine-api, axiom-writing + the Axiom MCP server | everyone |
-| `encoding` | encode-cli, oracles-usage | pipeline contributors |
+| `essential` | axiom-ecosystem, rulespec-format, engine-api, axiom-writing + the Axiom MCP server | everyone |
+| `encoding` | encode-cli, corpus-usage, oracles-usage | pipeline contributors |
 | `craft` | axiom-design, axiom-writing | demo/app builders |
 | `complete` | everything | maintainers |
 
@@ -51,11 +51,16 @@ Copy `templates/repo-settings.json` into the repo as `.claude/settings.json`
 ```
 .claude-plugin/marketplace.json   # bundles → skills mapping (the source of truth)
 skills/<name>/SKILL.md            # portable skill folders (harness-agnostic)
+agents/                           # org-wide agents (empty in v1; see agents/README.md
+                                  # for the repo-local → org-wide promotion path)
 mcp/axiom.json                    # MCP server config shipped with essential/complete
 templates/repo-settings.json     # drop-in .claude/settings.json for other repos
 dashboard/                        # static catalog viewer (Vercel-ready)
 scripts/build-catalog.mjs         # regenerates dashboard/catalog.json (CI-checked)
 ```
+
+Validate locally with `claude plugin validate .` (CI also checks the manifest,
+skill frontmatter, and catalog freshness).
 
 ## Contributing a skill
 

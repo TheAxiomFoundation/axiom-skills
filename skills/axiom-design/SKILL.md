@@ -32,6 +32,9 @@ description: >-
   frontend on Vercel reads `AXIOM_ENGINE_URL`); client-side compute uses the WASM
   build (the playground/reg-demo pattern: "no data leaves the page" — say so in the UI).
 - Deploy: Vercel, project name = repo name, register the URL in demo-shell.
+- **After every push, verify the deploy actually succeeded** (`vercel ls | head -5`);
+  if status is Error, reproduce with a local build before touching config. Deploy
+  fragility is a known launch risk — don't assume green.
 
 ## Every demo ships with
 

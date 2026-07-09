@@ -32,6 +32,18 @@
   belong in dated docs, not skills — skills should describe invariants and
   conventions that survive releases.
 
+## Promoting a repo-local agent (or command/hook) to org-wide
+
+Agents start life as `.claude/agents/<name>.md` in the repo that needs them —
+experiment there freely. When one proves reusable, promote it via PR here: copy the
+file to `agents/<name>.md`, add it to the right bundle's `"agents"` array, bump
+versions, regenerate the catalog. The full checklist (no repo-cwd assumptions,
+minimum tool allowlist, secrets by env-var name, delegation-quality description)
+lives in [agents/README.md](agents/README.md). Retiring the repo-local copy after
+promotion is **recommended but not required** while the ecosystem is young — just
+know that a same-named local agent shadows the shared one, so divergence should be
+deliberate and documented, not accidental.
+
 ## Review & curation
 
 One maintainer reviews skill PRs for trigger quality, factual currency, and overlap
