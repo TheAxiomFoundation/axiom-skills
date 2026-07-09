@@ -20,9 +20,27 @@ description: >-
    `/v1/runtime/packages` (the graph-viewer retired its hardcoded allowlist; don't
    reintroduce the pattern). New runtime packages should appear in your demo without
    a code change.
-3. **API keys never reach the browser.** Use the same-origin proxy pattern
-   (rulespec-graph-viewer: Vite dev proxy locally, a Vercel function
-   `api/axiom/[...path].ts` in prod injecting the key server-side).
+3. **API keys never reach the browser.** Use the same-origin proxy pattern from
+   rulespec-graph-viewer: Vite dev proxy locally; in prod a single Vercel function
+   `api/axiom.ts` behind a `vercel.json` rewrite (`/api/axiom/:path*` → `/api/axiom`)
+   injecting the key from `AXIOM_API_KEY` server-side. Client reads
+   `VITE_AXIOM_API_BASE ?? "/api/axiom"`.
+
+## Design tokens (from `packages/ui/src/tokens` — contrast-tested in CI)
+
+| Role | Token | Value |
+|---|---|---|
+| Surface / elevated | paper / paperElevated | `#faf9f6` / `#ffffff` |
+| Text / secondary / muted | ink / inkSecondary / inkMuted | `#1c1917` / `#57534e` / `#78716c` |
+| Accent (links, primary, focus ring) | accent | `#92400e` (hover `#7c2d12`) |
+| Border decorative / interactive | rule / ruleStrong | `#e7e5e4` / `#78716c` |
+| Status success / warning / error | — | `#166534` / `#92400e` / `#991b1b` |
+| Code surface | codeBg / codeText | `#1c1917` / `#e7e5e4` |
+
+Fonts: **GeistSans** (default body sans), **Newsreader** (editorial serif, display),
+**JetBrains Mono** (code/data). Interactive borders use `ruleStrong` (3:1 non-text
+contrast); `rule` is decorative-only. Don't invent colors — these pairs are
+contrast-asserted in `__tests__/contrast.test.ts` and drift fails CI.
 
 ## Stack defaults
 

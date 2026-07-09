@@ -35,17 +35,22 @@ durable Akoma Ntoso outputs.
 - `--stage` loads with `active=false`; promote later with `publish`, reverse with
   `unpublish`; find limbo rows with `list-unpublished`.
 - `sync-release-scopes` is upsert-incremental by default; `--exclusive`
-  (deactivate-all-then-reinsert) only when the manifest is the *complete* intended
-  active set.
+  (deactivate-all-then-reinsert) can silently unpromote work — only when the
+  manifest is the *complete* intended active set.
+- The scope tuple also carries a `release_name` dimension (default `"current"`);
+  `publish`/`unpublish` flags are `--jurisdiction --doc-type [--version] [--release]`.
+- **`navigation_nodes` shares the same version boundary** — public nav reads are
+  limited to active versions, staged nav rows coexist. `verify-release-coverage`
+  exists precisely to catch nav/provision mismatch; run it before promoting.
 - If data "isn't showing up," check release scopes before debugging the extractor.
 
 ## Working a state statute (the standard task shape)
 
 One jurisdiction at a time from `manifests/state-statute-agent-queue.yaml`; add or
-repair one source-first adapter; a successful task writes **all four scoped
-artifacts** (`sources/`, `inventory/`, `provisions/`, `coverage/`); coverage must be
-complete before proposing release promotion; run `verify-release-coverage` to check
-navigation/provision consistency.
+repair one source-first adapter **and wire it through `extract-state-statutes-batch`
+or a dedicated CLI command**; a successful task writes **all four scoped artifacts**
+(`sources/`, `inventory/`, `provisions/`, `coverage/`); coverage must be complete
+before proposing release promotion.
 
 ## Hard limits
 
