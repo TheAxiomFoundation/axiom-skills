@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Builds dashboard/catalog.json from .claude-plugin/marketplace.json + skill frontmatter.
+// Builds dashboard/catalog.json from .claude-plugin/marketplace.json + skill files.
 // Usage: node scripts/build-catalog.mjs [--check]
 // --check: exit 1 if the committed catalog differs from the freshly built one (CI drift guard).
 
@@ -12,8 +12,8 @@ const marketplace = JSON.parse(
   readFileSync(join(root, ".claude-plugin/marketplace.json"), "utf8"),
 );
 
-function parseFrontmatter(md) {
-  const m = md.match(/^---\n([\s\S]*?)\n---/);
+function parseSkill(md) {
+  const m = md.match(/^---\n([\s\S]*?)\n---\n?/);
   if (!m) return {};
   const fm = {};
   let key = null;
@@ -26,7 +26,24 @@ function parseFrontmatter(md) {
       fm[key] = (fm[key] ? fm[key] + " " : "") + line.trim();
     }
   }
-  return fm;
+  return { fm, body: md.slice(m[0].length).trim() };
+}
+
+// Split a description into prose + trigger phrases.
+function splitTriggers(description) {
+  const idx = description.indexOf("Triggers:");
+  if (idx === -1) return { summary: description.trim(), triggers: [] };
+  const summary = description.slice(0, idx).trim();
+  const tail = description.slice(idx + "Triggers:".length);
+  const triggers = [...tail.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+  // Unquoted trailing clause (e.g. "any file under rulespec-us/"), keep as one item.
+  const leftover = tail
+    .replace(/"[^"]*"/g, "")
+    .replace(/[,.]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (leftover && leftover.length > 3) triggers.push(leftover);
+  return { summary, triggers };
 }
 
 const skillsByPath = {};
@@ -41,23 +58,29 @@ for (const plugin of marketplace.plugins) {
       process.exitCode = 1;
       continue;
     }
-    const fm = parseFrontmatter(readFileSync(file, "utf8"));
+    const { fm = {}, body = "" } = parseSkill(readFileSync(file, "utf8"));
     if (!fm.name || !fm.description) {
       console.error(`INVALID: ${rel}/SKILL.md missing name or description frontmatter`);
       process.exitCode = 1;
     }
-    skillsByPath[rel] = { path: rel, name: fm.name ?? rel, description: fm.description ?? "" };
+    const { summary, triggers } = splitTriggers(fm.description ?? "");
+    skillsByPath[rel] = { path: rel, name: fm.name ?? rel, summary, triggers, body };
   }
 }
 
 const catalog = {
-  marketplace: { name: marketplace.name, version: marketplace.version, description: marketplace.description },
+  marketplace: {
+    name: marketplace.name,
+    version: marketplace.version,
+    description: marketplace.description,
+  },
   bundles: marketplace.plugins.map((p) => ({
     name: p.name,
     description: p.description,
     category: p.category,
     skills: (p.skills ?? []).map((s) => skillsByPath[s]?.name ?? s),
     mcp: Boolean(p.mcpServers),
+    install: `/plugin install ${p.name}@axiom-skills`,
   })),
   skills: Object.values(skillsByPath)
     .map((s) => ({ ...s, bundles: bundlesBySkill[s.path] }))

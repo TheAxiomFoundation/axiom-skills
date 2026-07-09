@@ -15,7 +15,8 @@
         "engine-api",
         "axiom-writing"
       ],
-      "mcp": true
+      "mcp": true,
+      "install": "/plugin install essential@axiom-skills"
     },
     {
       "name": "encoding",
@@ -26,7 +27,8 @@
         "corpus-usage",
         "oracles-usage"
       ],
-      "mcp": false
+      "mcp": false,
+      "install": "/plugin install encoding@axiom-skills"
     },
     {
       "name": "craft",
@@ -36,7 +38,8 @@
         "axiom-design",
         "axiom-writing"
       ],
-      "mcp": false
+      "mcp": false,
+      "install": "/plugin install craft@axiom-skills"
     },
     {
       "name": "complete",
@@ -52,14 +55,33 @@
         "axiom-writing",
         "axiom-design"
       ],
-      "mcp": true
+      "mcp": true,
+      "install": "/plugin install complete@axiom-skills"
     }
   ],
   "skills": [
     {
       "path": "./skills/axiom-design",
       "name": "axiom-design",
-      "description": "ALWAYS LOAD THIS SKILL before building or modifying any Axiom demo, dashboard, web app, or frontend surface — new demos especially. Triggers: \"new demo\", \"demo app\", \"dashboard\", \"landing page\", \"frontend\", \"web app\", \"Vercel\", \"deploy the demo\", \"UI\", \"widget\", \"embed\", \"calculator\", \"graph viewer\", \"add analytics\", \"mobile\".",
+      "summary": "ALWAYS LOAD THIS SKILL before building or modifying any Axiom demo, dashboard, web app, or frontend surface — new demos especially.",
+      "triggers": [
+        "new demo",
+        "demo app",
+        "dashboard",
+        "landing page",
+        "frontend",
+        "web app",
+        "Vercel",
+        "deploy the demo",
+        "UI",
+        "widget",
+        "embed",
+        "calculator",
+        "graph viewer",
+        "add analytics",
+        "mobile"
+      ],
+      "body": "# Axiom demo & frontend conventions\n\n## Before you scaffold anything\n\n1. **Check the constellation first.** axiom-demo-shell's README is the canonical URL\n   registry and the three-layer story (01 Infrastructure / 02 Validation /\n   03 Application). A new demo must (a) fit one layer, (b) get its card + canonical\n   URL registered there, (c) not duplicate an existing demo — extend instead.\n2. **Registry-driven, never hardcoded.** Program/package lists come from\n   `/v1/runtime/packages` (the graph-viewer retired its hardcoded allowlist; don't\n   reintroduce the pattern). New runtime packages should appear in your demo without\n   a code change.\n3. **API keys never reach the browser.** Use the same-origin proxy pattern\n   (rulespec-graph-viewer: Vite dev proxy locally, a Vercel function\n   `api/axiom/[...path].ts` in prod injecting the key server-side).\n\n## Stack defaults\n\n- Prefer dependency-light. Static (demo-shell) or Vite+React for interactive; the\n  main site is Next.js — don't add Next to a demo unless it needs SSR.\n- Heavy compute goes to Modal (the finbot pattern: Rust engine at a Modal URL,\n  frontend on Vercel reads `AXIOM_ENGINE_URL`); client-side compute uses the WASM\n  build (the playground/reg-demo pattern: \"no data leaves the page\" — say so in the UI).\n- Deploy: Vercel, project name = repo name, register the URL in demo-shell.\n- **After every push, verify the deploy actually succeeded** (`vercel ls | head -5`);\n  if status is Error, reproduce with a local build before touching config. Deploy\n  fragility is a known launch risk — don't assume green.\n\n## Every demo ships with\n\n- **GA4 analytics wired to the Axiom CRM property `G-2YHG89FY0N`** (the convention\n  every existing demo follows).\n- **Mobile-friendly layout** — partners open launch links on phones; this is a\n  repeated retrofit cost, do it upfront.\n- **Tier label** (GA / Preview / Demo / Coming) consistent with the coverage page —\n  see axiom-writing for the vocabulary rules.\n- **Citations that link out** — any number derived from law links its durable ID /\n  source via the foundation.org document API (the finbot pattern).\n\n## Voice in UI copy\n\nFollows axiom-writing: validation claims dated and scoped, \"not encoded\" over\nguessing, no hype. Empty states explain what's *not* covered rather than hiding it.",
       "bundles": [
         "craft",
         "complete"
@@ -68,7 +90,24 @@
     {
       "path": "./skills/axiom-ecosystem",
       "name": "axiom-ecosystem",
-      "description": "ALWAYS LOAD THIS SKILL when working in any Axiom Foundation repo — it defines repo boundaries (which repo owns what) and the org workflow rules, including the rule that PolicyEngine skills must not drive Axiom work. Triggers: working under TheAxiomFoundation, \"which repo\", \"where does this live\", \"axiom-corpus\", \"axiom-encode\", \"rulespec\", \"axiom-rules-engine\", \"axiom-api\", \"repo boundaries\", \"PolicyEngine skill\", \"encode this\", \"add a source\", \"where do encodings go\", \"where do tests go\".",
+      "summary": "ALWAYS LOAD THIS SKILL when working in any Axiom Foundation repo — it defines repo boundaries (which repo owns what) and the org workflow rules, including the rule that PolicyEngine skills must not drive Axiom work.",
+      "triggers": [
+        "which repo",
+        "where does this live",
+        "axiom-corpus",
+        "axiom-encode",
+        "rulespec",
+        "axiom-rules-engine",
+        "axiom-api",
+        "repo boundaries",
+        "PolicyEngine skill",
+        "encode this",
+        "add a source",
+        "where do encodings go",
+        "where do tests go",
+        "working under TheAxiomFoundation"
+      ],
+      "body": "# Axiom ecosystem — boundaries and org rules\n\n## The rule that prevents the most damage\n\n**Do not use PolicyEngine workflow or implementation skills for Axiom encoding,\nRuleSpec, corpus, or oracle-parity tasks.** Many Axiom contributors also have the\nPolicyEngine plugins installed; those skills encode PE's formats and conventions,\nwhich are *different by design*. In Axiom, PolicyEngine is an **oracle/comparison\ndependency, not the workflow owner**. If a reusable Axiom workflow is missing,\npropose a skill for axiom-skills instead of borrowing a PE one.\n\n## Who owns what\n\n| Concern | Repo | Never put here |\n|---|---|---|\n| Source text + provenance (statutes, regs, guidance) | **axiom-corpus** | executable encodings |\n| Encoder + validation gauntlet | **axiom-encode** | policy content |\n| Encoded law (RuleSpec YAML + companion tests) | **rulespec-\\*** country repos | source payloads, generated formula artifacts |\n| Program composition | **axiom-compose** (library) + `programs/` in rulespec repos | program-specific Python |\n| Execution runtime | **axiom-rules-engine** | production policy content (fixtures only) |\n| Cross-engine validation | **axiom-oracles** | product UI |\n| Bill tracking / change signals | **axiom-bills** | encodings |\n| Hosted API + runtime-package registry | **axiom-api** | — |\n| Agent channel | **axiom-mcp** (npm `@axiom-foundation/mcp`) | — |\n| Website + Axiom App | **axiom-foundation.org** | request-time GitHub reads |\n| Org skills/agents (this layer) | **axiom-skills** | secrets, dated production stats |\n\nRule of thumb from axiom-corpus: *\"When a provision repeats a value from another\nsource, represent that in the rules repo with RuleSpec metadata and source\nverification. The corpus repo should only make the source text available.\"*\n\n## Source discipline (applies org-wide)\n\n- **Primary official government sources only.** Never ingest secondary summaries\n  (State Options Reports, Justia, FindLaw, LegiScan) unless explicitly directed for\n  a non-canonical experiment.\n- Publication is a deliberate act: don't publish to R2, load Supabase production,\n  or flip release-scope visibility unless explicitly asked.\n\n## Where knowledge lives\n\nRepo-specific facts (build commands, local quirks) → that repo's CLAUDE.md.\nCross-repo conventions → a skill in axiom-skills (PR it — see CONTRIBUTING).\nDated production stats (package counts, parity numbers) → dated docs/dashboards,\nnever skills.",
       "bundles": [
         "essential",
         "complete"
@@ -77,7 +116,22 @@
     {
       "path": "./skills/axiom-writing",
       "name": "axiom-writing",
-      "description": "ALWAYS LOAD THIS SKILL before writing anything public-facing or partner-facing for Axiom — READMEs, launch/blog posts, docs pages, partner emails, coverage claims, demo copy, PR descriptions on public repos, grant text. Triggers: \"write a blog post\", \"announcement\", \"launch copy\", \"README\", \"partner email\", \"coverage page\", \"describe validation\", \"docs page\", \"marketing copy\", \"landing page text\", \"grant application\", \"one-pager\".",
+      "summary": "ALWAYS LOAD THIS SKILL before writing anything public-facing or partner-facing for Axiom — READMEs, launch/blog posts, docs pages, partner emails, coverage claims, demo copy, PR descriptions on public repos, grant text.",
+      "triggers": [
+        "write a blog post",
+        "announcement",
+        "launch copy",
+        "README",
+        "partner email",
+        "coverage page",
+        "describe validation",
+        "docs page",
+        "marketing copy",
+        "landing page text",
+        "grant application",
+        "one-pager"
+      ],
+      "body": "# Axiom writing voice\n\n## The stance\n\nAxiom's credibility rests on being the project that *never overclaims about law*.\nEvery sentence should survive a skeptical technical evaluator — that's the primary\naudience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectives.\n\n## Hard rules\n\n1. **\"Not encoded\" over guessing.** Never imply coverage that doesn't exist. FinBot's\n   grounded side says \"not encoded\" rather than answering — all copy follows the same\n   principle.\n2. **Date and scope every validation claim.** Not \"validated against PolicyEngine\"\n   but \"0 PE mismatches on the full CO population (Jun 2026)\". Include the\n   denominator: \"3/3 canonical parity cases\", \"99.52% on US federal income tax\".\n3. **Use the product-tier vocabulary exactly**: **GA** (live, supported), **Preview**\n   (usable, evolving), **Demo** (curated surface), **Coming** (announced, waitlisted).\n   Don't invent synonyms; don't promote a tier in copy before it's promoted in fact.\n4. **Self-graded packages are labeled as such.** A compiled package with no oracle\n   case yet is \"compiled and executable; independent validation pending\" — never\n   \"validated\".\n5. **Cite the law, not our paraphrase.** When describing what a rule does, link the\n   durable ID / statute citation. The whole pitch is \"read the statute next to the\n   code that runs it\" — copy should model that behavior.\n6. **The canonical three-layer explanation** (use it; don't freelance new framings):\n   Axiom makes the law itself the software → AI writes the rules, a deterministic\n   gauntlet decides what ships (grounding → compile → tests → oracle agreement →\n   signed manifest) → the AI never gets to grade its own work.\n7. **Active voice, plain sentences, no em-dash-heavy marketing cadence.** Write like\n   an auditor who is pleased with the findings.\n\n## Words to avoid\n\n\"revolutionary\", \"AI-powered\" (as a selling point — the gauntlet is the point),\n\"guarantees\", \"always accurate\", \"replaces caseworkers\", \"fully validated\" (without\nscope+date), \"cannot be wrong\".",
       "bundles": [
         "essential",
         "craft",
@@ -87,7 +141,26 @@
     {
       "path": "./skills/corpus-usage",
       "name": "corpus-usage",
-      "description": "ALWAYS LOAD THIS SKILL before ingesting sources, loading/publishing corpus data, or debugging why provisions aren't visible in the app. Triggers: \"axiom-corpus\", \"ingest\", \"corpus\", \"provisions\", \"release scopes\", \"load-supabase\", \"sync-r2\", \"publish version\", \"unpublish\", \"navigation nodes\", \"current_provisions\", \"source snapshot\", \"state statute\", \"manifest\", \"coverage report\", \"provision not showing\".",
+      "summary": "ALWAYS LOAD THIS SKILL before ingesting sources, loading/publishing corpus data, or debugging why provisions aren't visible in the app.",
+      "triggers": [
+        "axiom-corpus",
+        "ingest",
+        "corpus",
+        "provisions",
+        "release scopes",
+        "load-supabase",
+        "sync-r2",
+        "publish version",
+        "unpublish",
+        "navigation nodes",
+        "current_provisions",
+        "source snapshot",
+        "state statute",
+        "manifest",
+        "coverage report",
+        "provision not showing"
+      ],
+      "body": "# axiom-corpus — ingestion and publication\n\n## Mental model\n\n```\nofficial source document → manifest/catalog entry → extractor\n  → data/corpus/{sources,inventory,provisions,coverage}\n  → R2 bucket axiom-corpus (raw + artifacts)  +  Supabase corpus.provisions (serving projection)\n```\n\nSupabase is the **serving projection, not the canonical source of truth** — the\ndurable artifacts are the source snapshots, inventory, provision JSONL, coverage\nreports, and release manifests. Never store executable encodings here; never add\ndurable Akoma Ntoso outputs.\n\n## The release-scopes visibility model (the #1 confusion)\n\n`corpus.current_provisions` (what the app reads) is a view filtered by\n`corpus.release_scopes`: rows are visible **only if** a matching\n`(jurisdiction, document_class, version)` row exists with `active = true`.\n\n- `load-supabase` auto-registers the release-scope row `active=true` by default —\n  \"forgot to register\" is no longer the silent-hiding failure mode.\n- `--stage` loads with `active=false`; promote later with `publish`, reverse with\n  `unpublish`; find limbo rows with `list-unpublished`.\n- `sync-release-scopes` is upsert-incremental by default; `--exclusive`\n  (deactivate-all-then-reinsert) only when the manifest is the *complete* intended\n  active set.\n- If data \"isn't showing up,\" check release scopes before debugging the extractor.\n\n## Working a state statute (the standard task shape)\n\nOne jurisdiction at a time from `manifests/state-statute-agent-queue.yaml`; add or\nrepair one source-first adapter; a successful task writes **all four scoped\nartifacts** (`sources/`, `inventory/`, `provisions/`, `coverage/`); coverage must be\ncomplete before proposing release promotion; run `verify-release-coverage` to check\nnavigation/provision consistency.\n\n## Hard limits\n\n- **Primary official sources only** — no Justia/FindLaw/LegiScan/summary ingestion.\n- **Publication requires explicit user intent**: no R2 publish, Supabase production\n  load, main-merge, or production-row deletion on your own initiative.\n- Known gap: `as_of` point-in-time works only for eCFR; statute point-in-time is a\n  no-op — don't build features assuming it exists.\n\n## Checks before handoff\n\n`uv run --extra dev ruff check .` · mypy on `src/axiom_corpus/corpus` ·\n`pytest -q` (focused for the adapter you touched) · `towncrier check` · for\nrelease-ready scopes, the `coverage --write` command from AGENTS.md.",
       "bundles": [
         "encoding",
         "complete"
@@ -96,7 +169,26 @@
     {
       "path": "./skills/encode-cli",
       "name": "encode-cli",
-      "description": "ALWAYS LOAD THIS SKILL before running or debugging the axiom-encode pipeline — encoding a provision, validating, applying, or investigating a failed run. Triggers: \"encode a provision\", \"axiom-encode\", \"encoding run\", \"gauntlet\", \"proof-validate\", \"eval-suite\", \"apply manifest\", \"guard-generated\", \"source staleness\", \"repair.json\", \"encoding backend\", \"codex\", \"run log\", \"readiness gates\", \"oracle coverage\", \"encode --apply\".",
+      "summary": "ALWAYS LOAD THIS SKILL before running or debugging the axiom-encode pipeline — encoding a provision, validating, applying, or investigating a failed run.",
+      "triggers": [
+        "encode a provision",
+        "axiom-encode",
+        "encoding run",
+        "gauntlet",
+        "proof-validate",
+        "eval-suite",
+        "apply manifest",
+        "guard-generated",
+        "source staleness",
+        "repair.json",
+        "encoding backend",
+        "codex",
+        "run log",
+        "readiness gates",
+        "oracle coverage",
+        "encode --apply"
+      ],
+      "body": "# axiom-encode — the factory and its gauntlet\n\n## Mental model\n\nThe AI writes the code; it never gets to grade its own work. Generation backend is\nCodex/gpt-5.5 (via Codex CLI auth); Claude is reserved for orchestration, gating, and\nreview — not YAML generation. `--backend claude|openai` exists but the default split\nis deliberate.\n\n## The pipeline\n\n```\nencode \"26 USC 32(a)(1)\"     # resolves citation → corpus.provisions (local JSONL → Supabase fallback)\n  └─ generates RuleSpec YAML\nvalidate                      # engine compile\nproof-validate                # explicit proof trees; source-claim IDs resolved against\n                              # axiom-corpus/claims; missing/placeholder claims REJECTED\n<oracle comparison>           # against the pinned axiom-oracles version\neval-suite                    # manifest benchmarks → readiness gates: success rate,\n                              # compile rate, CI pass rate, zero-ungrounded rate,\n                              # PE pass rate, mean cost. Exit 0 only if ALL pass.\nencode --apply                # validates in a temp policy-repo overlay, then writes a\n                              # SIGNED JSON apply-manifest (.axiom/encoding-manifests/)\n                              # — requires AXIOM_ENCODE_APPLY_SIGNING_KEY\n```\n\n## Rules of the road\n\n1. **Never bypass `--apply`.** Hand-written or hand-patched statute YAML without a\n   validly signed manifest is rejected by `guard-generated` CI. There is no legitimate\n   workflow that edits generated YAML directly.\n2. **Ground or defer.** Modules carry `source_verification.corpus_citation_path`;\n   pin `source_sha256` where freshness matters and run `check-source-staleness`.\n   If the corpus can't isolate the subsection (known limitation with period-marked\n   subsections like \"1.\" / \"A.\"), defer rather than encode from adjacent text.\n3. **Failed runs leave `*.repair.json`** — read it before re-running; runs are\n   event-sourced into the run-log (Supabase telemetry feeds the public ops dashboard).\n4. **Oracle pins**: encode pins its axiom-oracles version for coverage; bumping the\n   pin is a deliberate act (it changes what \"passing\" means), not a routine chore.\n5. **Cost is a gate** — eval-suite tracks mean cost per module; don't disable it.\n\n## Known limitation queue (check before filing new issues)\n\nSibling-module rule-name collisions; amendment acts fail compile (missing\n`source_relation.amendment.operation`); source-scope check misclassifies non-US\nstatute strings; if-expressions rejected in judgment position.",
       "bundles": [
         "encoding",
         "complete"
@@ -105,7 +197,27 @@
     {
       "path": "./skills/engine-api",
       "name": "engine-api",
-      "description": "ALWAYS LOAD THIS SKILL before compiling or executing RuleSpec, calling the axiom-rules-engine from Rust/Python/CLI, or debugging engine output. Triggers: \"compile rulespec\", \"run-compiled\", \"compiled artifact\", \"axiom-rules-engine\", \"axiom-rules\", \"explain trace\", \"dense\", \"batch execution\", \"CompiledDenseProgram\", \"PyO3\", \"WASM\", \"check-sources\", \"durable ID\", \"cross-period\", \"lifetime reduction\", \"runtime package\", \"execution request\".",
+      "summary": "ALWAYS LOAD THIS SKILL before compiling or executing RuleSpec, calling the axiom-rules-engine from Rust/Python/CLI, or debugging engine output.",
+      "triggers": [
+        "compile rulespec",
+        "run-compiled",
+        "compiled artifact",
+        "axiom-rules-engine",
+        "axiom-rules",
+        "explain trace",
+        "dense",
+        "batch execution",
+        "CompiledDenseProgram",
+        "PyO3",
+        "WASM",
+        "check-sources",
+        "durable ID",
+        "cross-period",
+        "lifetime reduction",
+        "runtime package",
+        "execution request"
+      ],
+      "body": "# Axiom rules engine — usage\n\n## What it is\n\nRust crate (`axiom-rules-engine`; the `axiom-rules` checkout is the same codebase)\nthat compiles RuleSpec (`format: rulespec/v1`) into a `CompiledProgramArtifact` and\nexecutes it. Python bindings via PyO3 (`python/axiom_rules_engine/`, built with\nmaturin); a `wasm/` sub-crate compiles the engine for browser/client-side execution.\nEngine is infra-only — production policy content lives in rulespec-* repos; only test\nfixtures live in the engine repo.\n\n## CLI essentials\n\n- `compile` — RuleSpec → JSON compiled artifact. Source links from corpus provisions\n  are joined into artifacts at compile time.\n- `run-compiled` — execute an artifact against an execution request.\n- `check-sources` — validates the source registry; `--verify-r2` also checks R2\n  object existence + SHA-256.\n- `concepts search|show|validate|list` — static repo-backed concept index.\n\n## Non-negotiables when writing calling code\n\n1. **Key public references by durable legal IDs** (`us:statutes/7/2017/a#output`) —\n   never by file paths or invented names. Execution requests that don't will fail or,\n   worse, silently bind to nothing.\n2. **Use `explain` mode when debugging** — it emits a full trace of which rules fired\n   and why; don't reverse-engineer from outputs.\n3. **Typed outputs**: scalars vs judgments are distinct; temporal outputs come as\n   period/interval series, not single numbers. Cross-period (\"lifetime\") reductions\n   (e.g. `sum_top_n_over_periods`, built for OASDI highest-35-years) exist — don't\n   re-implement them in calling code.\n4. **Currency rounding is opt-in** — the engine carries cents by default. FNS-style\n   whole-dollar program rules need the rounding flag or you'll see ±$1 parity noise.\n5. **Batch/population runs**: use the columnar `CompiledDenseProgram` interface from\n   Python (this is what axiom-microsim does) — never loop single-case calls.\n\n## Consuming compiled packages remotely\n\nPrefer the hosted API / MCP server when you don't need in-process execution:\n`/v1/runtime/packages` lists compiled packages registry-driven (don't hardcode\nprogram lists — the graph-viewer retired its allowlist for a reason), and\n`/v1/calculate` executes them. The MCP server (`@axiom-foundation/mcp` on npm)\nexposes the same as agent tools. JSON Schemas for module/test/compiled-artifact are\nauthoritative under `schemas/` in the engine repo (draft-07, golden-file tested).",
       "bundles": [
         "essential",
         "complete"
@@ -114,7 +226,26 @@
     {
       "path": "./skills/oracles-usage",
       "name": "oracles-usage",
-      "description": "ALWAYS LOAD THIS SKILL before running parity/validation comparisons or interpreting oracle results. Covers axiom-oracles adapters, the compare CLI, and the traps. Triggers: \"parity\", \"oracle\", \"compare against PolicyEngine\", \"TAXSIM\", \"UKMOD\", \"EUROMOD\", \"SOUTHMOD\", \"ACCESS NYC\", \"mismatch\", \"golden cases\", \"contract cases\", \"populace\", \"Enhanced CPS\", \"validation dashboard\", \"triangulation\", \"conformance\".",
+      "summary": "ALWAYS LOAD THIS SKILL before running parity/validation comparisons or interpreting oracle results. Covers axiom-oracles adapters, the compare CLI, and the traps.",
+      "triggers": [
+        "parity",
+        "oracle",
+        "compare against PolicyEngine",
+        "TAXSIM",
+        "UKMOD",
+        "EUROMOD",
+        "SOUTHMOD",
+        "ACCESS NYC",
+        "mismatch",
+        "golden cases",
+        "contract cases",
+        "populace",
+        "Enhanced CPS",
+        "validation dashboard",
+        "triangulation",
+        "conformance"
+      ],
+      "body": "# axiom-oracles — cross-engine validation\n\n## Mental model\n\nThin concept-keyed `Case`/`Entity`/`Concepts` objects are projected by adapters into\neach engine's input language; normalized `EngineResult`s are compared with per-concept\ntolerances and a mismatch taxonomy. Any engine can be compared with any other:\n`compare axiom policyengine`, `compare policyengine taxsim`, `compare accessnyc policyengine`.\n\n## The oracle bench\n\n| Oracle | Scope | Notes |\n|---|---|---|\n| PolicyEngine | US + UK | primary US oracle; golden/contract cases live in axiom-api |\n| NBER TAXSIM | US income tax | third oracle for triangulation (CO suite live) |\n| Atlanta Fed PRD | US benefits | |\n| ACCESS NYC | NYC screening | public Drools rules + Screening API; scoped to GEOID 3651000 |\n| UKMOD / EUROMOD | UK / BE-EU | runs .NET EM_Executable via `euromod` connector; Rosetta on Apple Silicon |\n| SOUTHMOD models | ET/ZM/UG/GH/RW | in-progress country suites + `*-dispy` capstones |\n| Axiom itself | everything | adapter shells to the `axiom-rules` binary |\n\n## Traps that produce silently-wrong conclusions\n\n1. **Population pinning (the big one).** The default US population is the\n   content-pinned certified `populace-us` artifact (`populace://…@revision`, verified\n   sha256) — **never HF-latest**, which is a sparse L0 refit that zeroes ~80 engine\n   input bases and scores everything against ~$0. If aggregate results look absurdly\n   low, check the population pin first.\n2. **Known populace gaps shape coverage**: no immigration/SSN columns (everyone is a\n   citizen), degenerate housing tenure. Rule branches gated on those inputs are NOT\n   exercised — absence of mismatches there is not validation.\n3. **Rounding conventions**: the SNAP chain carries cents; FNS rounds to whole\n   dollars — a ±$1 mismatch on QC replays is a known convention gap, not a rule bug.\n4. **Self-graded ≠ validated.** A compiled runtime package with \"no oracle case yet\"\n   (e.g. the Jul-2026 TANF/SCRETD/OASDI additions) is executable, not verified. Say so\n   explicitly in anything user-facing (see axiom-writing).\n5. **Concept mapping is an intersection** — comparisons only cover concepts both\n   engines map after scope/locale filtering. A \"100% pass\" over 3 shared concepts is\n   weaker than 95% over 40; report the denominator.",
       "bundles": [
         "encoding",
         "complete"
@@ -123,7 +254,30 @@
     {
       "path": "./skills/rulespec-format",
       "name": "rulespec-format",
-      "description": "ALWAYS LOAD THIS SKILL before reading, writing, reviewing, or debugging any RuleSpec YAML in a rulespec-* repo. Covers the rulespec/v1 module format, durable legal IDs, companion tests, source verification, imports, program compose specs, and the governance machinery (signed manifests, ratcheted debt files). Triggers: \"rulespec\", \"encode\", \"rule module\", \"module kind\", \"composition\", \"durable legal ID\", \"companion test\", \".test.yaml\", \"source_verification\", \"corpus_citation_path\", \"imports\", \"program spec\", \"acknowledged_incomplete\", \"encoding manifest\", \"known-validation-gaps\", \"money atom\", \"provision\", \"statute YAML\", \"regulation YAML\", any file under rulespec-us/, rulespec-uk/, rulespec-ca/.",
+      "summary": "ALWAYS LOAD THIS SKILL before reading, writing, reviewing, or debugging any RuleSpec YAML in a rulespec-* repo. Covers the rulespec/v1 module format, durable legal IDs, companion tests, source verification, imports, program compose specs, and the governance machinery (signed manifests, ratcheted debt files).",
+      "triggers": [
+        "rulespec",
+        "encode",
+        "rule module",
+        "module kind",
+        "composition",
+        "durable legal ID",
+        "companion test",
+        ".test.yaml",
+        "source_verification",
+        "corpus_citation_path",
+        "imports",
+        "program spec",
+        "acknowledged_incomplete",
+        "encoding manifest",
+        "known-validation-gaps",
+        "money atom",
+        "provision",
+        "statute YAML",
+        "regulation YAML",
+        "any file under rulespec-us/ rulespec-uk/ rulespec-ca/"
+      ],
+      "body": "# RuleSpec format (rulespec/v1)\n\n## The one rule that governs everything\n\n**Never hand-edit statute/regulation/policy YAML in a rulespec repo.** Live RuleSpec is\ninstalled only via `encode --apply`, which writes an HMAC-signed apply-manifest under\n`.axiom/encoding-manifests/`. CI (`guard-generated`) rejects modules that drift from\ntheir manifest. If a rule is wrong, fix it through the encoder (see the encode-cli\nskill), not with an editor.\n\n## Layout: the file path IS the durable legal ID\n\n- One YAML per legal provision, companion test beside it:\n  `us/statutes/7/2015/e.yaml` + `us/statutes/7/2015/e.test.yaml`\n  → durable ID `us:statutes/7/2015/e`.\n- Outputs are addressed as `<durable-id>#<output>`:\n  `us:statutes/7/2017/a#snap_regular_month_allotment`.\n- Jurisdiction dirs: `us/` (federal), `us-co/`, `us-ca/`, … under rulespec-us;\n  country repos mirror the shape (`statutes/`, `regulations/`, `policies/`).\n- Program compose specs live in `programs/` — one YAML per\n  (jurisdiction, program, period). They are explicitly *not law*: they declare\n  `program`, `period`, `outputs`, `scope`, `transformations`, and\n  `acknowledged_incomplete`, and are assembled by axiom-compose.\n\n## Module anatomy\n\n```yaml\nformat: rulespec/v1\nmodule:\n  kind: composition            # or rule kinds; composition modules import atoms\n  summary: <one-line, faithful to the provision>\n  source_verification:\n    corpus_citation_path: <path into axiom-corpus provisions>\n    # optional: source_sha256 pin — enables staleness checks\nimports:\n  - us:statutes/7/2014/...     # durable IDs only; cross-jurisdiction allowed (us:, us-co:)\n```\n\n- Every monetary value needs a proof atom citing a provision — additions without one\n  land in `known-missing-money-atoms.yaml` (see ratchets below).\n- Judgment vs scalar outputs are typed; temporal values use periods/intervals.\n  The parser currently rejects if-expressions in judgment position (known limitation).\n\n## Governance machinery you must not fight\n\n- `.axiom/toolchain.toml` pins the validation toolchain by commit SHA — don't bump casually.\n- `.axiom/index/provisions_to_rules.json` is a generated reverse index; CI fails if\n  stale. Regenerate rather than editing. Bulk PRs contend on this file — rebase, don't merge-fix.\n- **Three ratcheted debt files** fail CI both on *new* entries and on *silently fixed*\n  entries (they may only shrink, explicitly): `known-dangling.yaml`,\n  `known-validation-gaps.yaml`, `known-missing-money-atoms.yaml`. If your change fixes\n  a listed gap, remove the entry in the same PR.\n\n## Repo hygiene (from the rulespec repos' own agent notes)\n\n**Do:** encodings under `statutes/`, `regulations/`, or `policies/`; tests beside\neach encoding as `.test.yaml`; only source-registry/manifest metadata under `sources/`.\n**Do not:** add singular rule roots; separate parameter or test-fixture files;\ngenerated formula artifacts; generated source payloads in Git; unrelated-jurisdiction\nmaterials.\n\n## Review checklist\n\n1. Path/durable-ID matches the actual citation; companion test exists.\n2. `source_verification.corpus_citation_path` resolves; summary is neutral and faithful.\n3. Imports are durable IDs (never relative paths); no orphaned eligibility outputs\n   (compose auto-AND-gates and will refuse).\n4. Signed manifest present for generated content (`guard-generated` will check anyway).\n5. Ratchet files updated in the same PR when applicable.",
       "bundles": [
         "essential",
         "complete"

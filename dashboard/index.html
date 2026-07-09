@@ -3,29 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Axiom Skills — Catalog</title>
+  <title>Axiom Skills — the catalog</title>
+  <meta name="description" content="Axiom Foundation's shared operating knowledge — encoded as skills, bundled, and loaded into every session." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Axiom Skills</h1>
-    <p id="tagline"></p>
-    <div id="counts"></div>
+  <header class="masthead">
+    <p class="eyebrow">Axiom Foundation · internal catalog</p>
+    <h1>The conventions that build computable law,<br /><em>themselves encoded.</em></h1>
+    <p class="lede">Every skill below loads itself into a session when the work matches its
+      triggers — the model knows the catalog so people don't have to. This page is the
+      human-readable projection of the same manifest the plugin installs from.</p>
+    <div class="masthead-meta">
+      <span id="counts" class="counts"></span>
+      <button class="cmd" data-copy="/plugin marketplace add TheAxiomFoundation/axiom-skills">
+        <code>/plugin marketplace add TheAxiomFoundation/axiom-skills</code><span class="copy-hint">copy</span>
+      </button>
+    </div>
   </header>
+
   <main>
-    <section id="bundles-section">
-      <h2>Bundles</h2>
-      <div id="bundles"></div>
+    <section aria-labelledby="bundles-h">
+      <h2 id="bundles-h"><span class="rule-label">Bundles</span></h2>
+      <p class="section-note">Install profiles. Pick by what you work on; <code>essential</code> is for everyone.</p>
+      <div id="bundles" class="bundles"></div>
     </section>
-    <section>
-      <h2>Catalog</h2>
-      <input id="search" type="search" placeholder="Search skills, triggers, descriptions…" />
-      <div id="skills"></div>
+
+    <section aria-labelledby="catalog-h">
+      <h2 id="catalog-h"><span class="rule-label">Catalog</span></h2>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Search skills, triggers, full text…" aria-label="Search the catalog" />
+        <div id="filters" class="filters" role="group" aria-label="Filter by bundle"></div>
+      </div>
+      <div id="skills" class="sections"></div>
     </section>
   </main>
+
   <footer>
-    <p>Generated from <code>.claude-plugin/marketplace.json</code> + skill frontmatter.
-       Install: <code>/plugin marketplace add TheAxiomFoundation/axiom-skills</code></p>
+    <p>Generated from <code>.claude-plugin/marketplace.json</code> and each skill's
+      <code>SKILL.md</code> — the page cannot drift from what installs.
+      Contribute at <a href="https://github.com/TheAxiomFoundation/axiom-skills">TheAxiomFoundation/axiom-skills</a>.</p>
   </footer>
   <script src="app.js"></script>
 </body>
