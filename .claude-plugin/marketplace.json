@@ -1,7 +1,7 @@
 {
   "$schema": "https://claude.ai/schemas/plugin-marketplace.json",
   "name": "axiom-skills",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Shared agent/skill infrastructure for the Axiom Foundation \u2014 pipeline knowledge, craft conventions, and (later) operational agents, reusable across every Axiom repo and harness",
   "owner": {
     "name": "Axiom Foundation",

@@ -32,7 +32,9 @@ The **∀XIOM** wordmark (flipped-A universal quantifier + XIOM, Geist, outlined
 paths) lives in **TheAxiomFoundation/axiom-brand** — SVG masters in six colors ×
 three weights plus channel-ready PNGs (Zoom, LinkedIn, OG, avatars, favicons).
 Browse/download: https://axiom-brand-sigma.vercel.app. Rules: use the kit files —
-never retype the wordmark in a live font; amber gradient (`#b45309→#8a3d08`) on
+never retype the wordmark in a live font; **outward-facing surfaces default to the
+FULL lockup (FOUNDATION under AXIOM) until brand recognition is established** —
+compact ∀XIOM only where space forbids; amber gradient (`#b45309→#8a3d08`) on
 paper, paper wordmark on ink/amber; the ∀ tile is the only square-format mark;
 clear space ≥ half the ∀'s width. In app code use the `AxiomLogo` component from
 `@axiom-foundation/ui` (currentColor-based), not copied SVG. Caution: the bare
