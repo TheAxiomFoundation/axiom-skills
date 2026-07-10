@@ -26,6 +26,19 @@ description: >-
    injecting the key from `AXIOM_API_KEY` server-side. Client reads
    `VITE_AXIOM_API_BASE ?? "/api/axiom"`.
 
+## Brand assets — never rebuild the logo by hand
+
+The **∀XIOM** wordmark (flipped-A universal quantifier + XIOM, Geist, outlined to
+paths) lives in **TheAxiomFoundation/axiom-brand** — SVG masters in six colors ×
+three weights plus channel-ready PNGs (Zoom, LinkedIn, OG, avatars, favicons).
+Browse/download: https://axiom-brand-sigma.vercel.app. Rules: use the kit files —
+never retype the wordmark in a live font; amber gradient (`#b45309→#8a3d08`) on
+paper, paper wordmark on ink/amber; the ∀ tile is the only square-format mark;
+clear space ≥ half the ∀'s width. In app code use the `AxiomLogo` component from
+`@axiom-foundation/ui` (currentColor-based), not copied SVG. Caution: the bare
+`axiom-brand.vercel.app` domain belongs to an unrelated company — always use the
+URLs above.
+
 ## Design tokens (from `packages/ui/src/tokens` — contrast-tested in CI)
 
 | Role | Token | Value |
