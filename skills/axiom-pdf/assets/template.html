@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DOCUMENT TITLE — Axiom Foundation</title>
+<style>
+@import url("fonts-embed.css");   /* embedded Geist / Geist Mono / Newsreader — keeps the PDF fallback-free */
+  :root{
+    --paper:#ffffff; --paperElevated:#ffffff;
+    --ink:#1c1917; --inkSecondary:#57534e; --inkMuted:#78716c;
+    --accent:#92400e; --accentHover:#7c2d12;
+    --rule:#e7e5e4; --ruleStrong:#78716c;
+    --success:#166534;
+    --amber1:#b45309; --amber2:#8a3d08;
+  }
+  @page{ size:Letter; margin:0.6in 0.7in; }
+  *{ box-sizing:border-box; }
+  table,tr,.note,.risk,ol.steps>li,ul.asks>li{ break-inside:avoid; }
+  h2,.budget-label,.subhead{ break-after:avoid; }
+  .sig,hr{ break-before:avoid; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Geist","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:11pt; line-height:1.47; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:7.1in; margin:0 auto; }
+
+  /* Masthead */
+  .masthead{ display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:14px; }
+  .masthead .logo{ width:140px; height:auto; display:block; }
+  .kicker{ text-align:right; font-size:8pt; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; line-height:1.7; }
+
+  h1{ font-family:"Newsreader",Georgia,"Times New Roman",serif;
+    font-weight:500; font-size:22pt; line-height:1.08; letter-spacing:-0.01em;
+    margin:2px 0 4px; color:var(--ink); }
+  .dek{ font-family:"Newsreader",Georgia,serif; font-style:italic; font-size:13pt;
+    color:var(--inkSecondary); margin:0 0 16px; }
+
+  h2{ font-size:9pt; letter-spacing:0.14em; text-transform:uppercase; font-weight:700;
+    color:var(--accent); margin:16px 0 7px; padding-bottom:3px;
+    border-bottom:1px solid var(--rule); }
+
+  p{ margin:0 0 7px; }
+  strong{ font-weight:600; color:var(--ink); }
+  a{ color:var(--accent); text-decoration:none; }
+  a strong{ color:var(--accent); }
+  em{ color:var(--inkSecondary); }
+  .lead strong{ color:var(--ink); }
+
+  ol.steps{ margin:0 0 7px; padding-left:0; list-style:none; counter-reset:step; }
+  ol.steps>li{ counter-increment:step; position:relative; padding-left:27px; margin-bottom:7px; }
+  ol.steps>li::before{ content:counter(step); position:absolute; left:0; top:1px;
+    width:18px; height:18px; border-radius:50%; background:var(--accent); color:#fff;
+    font-size:9.5pt; font-weight:700; display:flex; align-items:center; justify-content:center; }
+
+  ul.asks{ margin:0 0 7px; padding-left:0; list-style:none; }
+  ul.asks>li{ position:relative; padding-left:13px; margin-bottom:3px; }
+  ul.asks>li::before{ content:""; position:absolute; left:0; top:5px; width:5px; height:5px;
+    background:var(--accent); border-radius:1px; }
+
+  .subhead{ font-weight:600; color:var(--ink); margin:8px 0 4px; }
+
+  .note{ font-family:"Newsreader",Georgia,serif; font-style:italic; font-size:11pt;
+    color:var(--inkSecondary); background:transparent; border-left:2px solid var(--accent);
+    padding:5px 11px; margin:9px 0; line-height:1.42; }
+
+  table{ width:100%; border-collapse:collapse; margin:5px 0 7px; font-size:10.5pt; }
+  th{ text-align:left; font-size:8.5pt; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--inkMuted); font-weight:700; border-bottom:1.5px solid var(--ruleStrong);
+    padding:4px 8px 4px 0; }
+  td{ padding:5px 8px 5px 0; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--inkSecondary); }
+  td:last-child,th:last-child{ text-align:right; white-space:nowrap; padding-right:0;
+    font-variant-numeric:tabular-nums; color:var(--ink); font-weight:600; }
+  tr.total td{ border-bottom:none; border-top:1.5px solid var(--ink); color:var(--ink);
+    font-weight:700; padding-top:5px; }
+  .amt{ font-family:"Geist Mono",ui-monospace,monospace; }
+  .budget-label{ font-weight:700; color:var(--ink); font-size:11pt; margin:11px 0 3px; }
+
+  .risk{ font-size:11pt; color:var(--inkSecondary); background:var(--paperElevated);
+    border:1px solid var(--ruleStrong); border-radius:3px; padding:9px 11px; margin:9px 0; line-height:1.45; }
+
+  .goes p{ margin-bottom:5px; }
+  .goes strong{ color:var(--accent); }
+
+  hr{ border:none; border-top:1px solid var(--rule); margin:14px 0 8px; }
+  .sig{ font-size:9.5pt; color:var(--inkMuted); text-align:center; }
+  .sig a{ color:var(--inkMuted); }
+  .draft-tag{ display:inline-block; font-size:7.5pt; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); border:1px solid var(--accent); border-radius:2px; padding:1px 5px; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MASTHEAD: kit wordmark (never retype in a live font) + kicker -->
+  <div class="masthead">
+    <img src="axiom-full-w350-gradient.svg" class="logo" alt="Axiom Foundation">
+    <div class="kicker">
+      DOCUMENT KIND<br>MONTH YEAR · <span class="draft-tag">Draft</span>
+    </div>
+  </div>
+
+  <h1>Document Title in Newsreader</h1>
+  <p class="dek">One-line italic standfirst that frames the ask.</p>
+
+  <!-- SECTION: amber uppercase label + 11pt Geist body -->
+  <h2>Section Label</h2>
+  <p>Body copy at the 11pt floor. Use <strong>strong</strong> for emphasis and <a href="https://axiom.org">amber links</a>. Bold-inside-a-link stays amber via the <code>a strong</code> rule.</p>
+
+  <!-- Numbered steps with amber badges -->
+  <ol class="steps">
+    <li><strong>Step one.</strong> What happens.</li>
+    <li><strong>Step two.</strong> What happens.</li>
+  </ol>
+
+  <!-- Italic serif aside / background note -->
+  <p class="note">Background or aside in italic Newsreader, left-ruled in amber.</p>
+
+  <!-- Bulleted asks/commitments -->
+  <p class="subhead">Sub-heading for a list</p>
+  <ul class="asks">
+    <li><strong>Item</strong> — detail.</li>
+  </ul>
+
+  <!-- Bordered callout for risks / caveats -->
+  <p class="risk"><strong>Callout.</strong> Bordered box for risks or key caveats.</p>
+
+  <!-- Budget / data table with tabular mono figures in the right column -->
+  <h2>Budget</h2>
+  <p class="budget-label">Grant to the Axiom Foundation — $NN,NNN over N months</p>
+  <table>
+    <thead><tr><th style="width:22%">Category</th><th>Basis</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--ink);font-weight:600">Line item</td><td>Basis.</td><td class="amt">$00,000</td></tr>
+      <tr class="total"><td>Total</td><td></td><td class="amt">$00,000</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <p class="sig">Name · Title, Axiom Foundation · <a href="mailto:name@axiom.org">name@axiom.org</a> · <a href="https://axiom.org">axiom.org</a></p>
+
+</div>
+</body>
+</html>
