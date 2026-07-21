@@ -1,7 +1,7 @@
 {
   "marketplace": {
     "name": "axiom-skills",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "Shared agent/skill infrastructure for the Axiom Foundation — pipeline knowledge, craft conventions, and (later) operational agents, reusable across every Axiom repo and harness"
   },
   "bundles": [
@@ -36,6 +36,7 @@
       "category": "craft",
       "skills": [
         "axiom-design",
+        "axiom-pdf",
         "axiom-writing"
       ],
       "mcp": false,
@@ -53,7 +54,8 @@
         "corpus-usage",
         "oracles-usage",
         "axiom-writing",
-        "axiom-design"
+        "axiom-design",
+        "axiom-pdf"
       ],
       "mcp": true,
       "install": "/plugin install complete@axiom-skills"
@@ -110,6 +112,32 @@
       "body": "# Axiom ecosystem — boundaries and org rules\n\n## The rule that prevents the most damage\n\n**Do not use PolicyEngine workflow or implementation skills for Axiom encoding,\nRuleSpec, corpus, or oracle-parity tasks.** Many Axiom contributors also have the\nPolicyEngine plugins installed; those skills encode PE's formats and conventions,\nwhich are *different by design*. In Axiom, PolicyEngine is an **oracle/comparison\ndependency, not the workflow owner**. If a reusable Axiom workflow is missing,\npropose a skill for axiom-skills instead of borrowing a PE one.\n\n## Who owns what\n\n| Concern | Repo | Never put here |\n|---|---|---|\n| Source text + provenance (statutes, regs, guidance) | **axiom-corpus** | executable encodings |\n| Encoder + validation gauntlet | **axiom-encode** | policy content |\n| Encoded law (RuleSpec YAML + companion tests) | **rulespec-\\*** country repos | source payloads, generated formula artifacts |\n| Program composition | **axiom-compose** (library) + `programs/` in rulespec repos | program-specific Python |\n| Execution runtime | **axiom-rules-engine** | production policy content (fixtures only) |\n| Cross-engine validation | **axiom-oracles** | product UI |\n| Bill tracking / change signals | **axiom-bills** | encodings |\n| Hosted API + runtime-package registry | **axiom-api** | — |\n| Agent channel | **axiom-mcp** (npm `@axiom-foundation/mcp`) | — |\n| Website + Axiom App | **axiom-foundation.org** | request-time GitHub reads (rule: ops `docs/distribution-and-integration-modes.md`; a legacy ISR-cached GitHub fallback still exists in `src/lib/supabase.ts` — don't extend it) |\n| Org skills/agents (this layer) | **axiom-skills** | secrets, dated production stats |\n\nRule of thumb from axiom-corpus: *\"When a provision repeats a value from another\nsource, represent that in the rules repo with RuleSpec metadata and source\nverification. The corpus repo should only make the source text available.\"*\n\n## Source discipline (applies org-wide)\n\n- **Primary official government sources only.** Never ingest secondary summaries\n  (State Options Reports, Justia, FindLaw, LegiScan) unless explicitly directed for\n  a non-canonical experiment.\n- Publication is a deliberate act: don't publish to R2, load Supabase production,\n  or flip release-scope visibility unless explicitly asked.\n\n## Local infrastructure paths\n\nR2 credentials: `~/.config/axiom-foundation/r2-credentials.json` · converter cache:\n`~/.axiom/` · encoding scratch: `~/.axiom/workspace`. The repo-boundaries map above\nis machine-checked — foundation.org's `repo-map.test.ts` asserts a new repo family\nis a three-part change.\n\n## Where knowledge lives\n\nRepo-specific facts (build commands, local quirks) → that repo's CLAUDE.md.\nCross-repo conventions → a skill in axiom-skills (PR it — see CONTRIBUTING).\nDated production stats (package counts, parity numbers) → dated docs/dashboards,\nnever skills.",
       "bundles": [
         "essential",
+        "complete"
+      ]
+    },
+    {
+      "path": "./skills/axiom-pdf",
+      "name": "axiom-pdf",
+      "summary": "ALWAYS LOAD THIS SKILL before producing any Axiom-branded PDF or print document — proposals, funder one-pagers, partner briefs, letters, leave-behinds, memos meant to be printed or sent as PDF. Covers the HTML→PDF pipeline, the brand-font embedding, the kit wordmark, and the print type/layout rules.",
+      "triggers": [
+        "PDF",
+        "one-pager",
+        "one pager",
+        "proposal",
+        "funder brief",
+        "partner brief",
+        "leave-behind",
+        "print",
+        "export to PDF",
+        "formatted PDF",
+        "letter",
+        "brief",
+        "make this a PDF",
+        "branded document"
+      ],
+      "body": "# Axiom branded PDF & print documents\n\nProduces on-brand PDFs (proposals, briefs, one-pagers) by rendering a self-contained\nHTML file with headless Chrome. Same tokens as [axiom-design](../axiom-design/SKILL.md)\n— this skill is the **print** counterpart: fixed page size, embedded fonts, no JS.\n\n## Pipeline\n\n1. Copy `assets/` (`template.html`, `fonts-embed.css`, `axiom-full-w350-gradient.svg`,\n   `render.sh`) next to where the document will live — the three files must sit in\n   the **same directory** as the HTML so the `@import` and `<img>`/wordmark resolve.\n2. Fill `template.html` with content. Keep the component classes; don't invent new\n   colors or fonts.\n3. Render: `./render.sh page.html` → writes `page.pdf` and prints the page count.\n4. **Verify before shipping** — screenshot the render and read it back (headless\n   `--screenshot` with a tall `--window-size`, or open the PDF). Confirm the\n   wordmark shows, the fonts are the real Geist/Newsreader (not a fallback), and\n   nothing splits awkwardly across a page break.\n\n## Non-negotiables\n\n- **Wordmark = kit file, never a live font.** Use `axiom-full-w350-gradient.svg`\n  (the canonical full lockup from `TheAxiomFoundation/axiom-brand`,\n  `svg/wordmark/full/`). Outward-facing docs use the **FULL** lockup (FOUNDATION\n  under ∀XIOM) until brand recognition is established — compact only where space\n  forbids. Refresh from the brand repo if it has moved; don't retype the wordmark.\n- **Embed the fonts.** Ship `fonts-embed.css` (base64 Geist, Geist Mono, Newsreader —\n  all redistributable) so the PDF bakes in real glyphs with **no fallback**. Never\n  rely on system fonts being present at render time. Regenerate with\n  `rebuild-fonts.py` only if refreshing.\n- **Body text ≥ 11pt.** The reading text — paragraphs, list items, callouts, and\n  substantive asides — sits at an 11pt floor for legibility. Labels, table headers,\n  and the kicker may be smaller, but never the prose. (A single page is not worth\n  sacrificing legibility; let it run to more pages.)\n- **Pure white background** (`#ffffff`) for print. No cream/paper tint — that reads\n  as off-white on paper and on projectors. Callouts use borders, not fills.\n- **Amber links, even when bold.** Links are `--accent`; bold-inside-a-link must\n  stay amber via the `a strong { color: var(--accent); }` rule (bare `strong` is\n  ink, which silently overrides link color otherwise).\n- **Voice** follows [axiom-writing](../axiom-writing/SKILL.md): claims dated and\n  scoped, no hype. Any headline stat re-verified against its live source before\n  each send, with the snapshot date pinned in the text.\n\n## Print tokens (subset of axiom-design, tuned for paper)\n\n| Role | Value |\n|---|---|\n| Surface | `#ffffff` |\n| Ink / secondary / muted | `#1c1917` / `#57534e` / `#78716c` |\n| Accent (labels, links, badges, rules) | `#92400e` |\n| Amber wordmark gradient | `#b45309 → #8a3d08` |\n| Decorative / strong rule | `#e7e5e4` / `#78716c` |\n| Display serif | Newsreader (title, dek, italic notes) |\n| Body sans | Geist |\n| Data / figures | Geist Mono (tabular, right-aligned amounts) |\n\n## Components in `template.html`\n\n`.masthead` (wordmark + `.kicker` + `.draft-tag`) · `h1`/`.dek` (Newsreader) ·\n`h2` (amber uppercase section label) · `ol.steps` (amber numbered badges) ·\n`ul.asks` (amber square bullets) · `.subhead` · `.note` (italic serif, amber\nleft-rule aside) · `.risk` (bordered caveat box) · `.budget-label` + `table`\n(`.amt` mono figures, `tr.total` ruled total row) · `.sig` (centered footer).\n\nPage break hygiene is built in: `table, tr, .note, .risk, li { break-inside: avoid }`\nand headings avoid breaking away from what follows.\n\n## Domain & naming\n\nUse **axiom.org** (not axiom-foundation.org) for all links and email. Write\n**\"the Axiom Foundation\"** in full — never bare \"Axiom\" — in body copy.",
+      "bundles": [
+        "craft",
         "complete"
       ]
     },

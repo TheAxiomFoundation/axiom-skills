@@ -1,7 +1,7 @@
 {
   "$schema": "https://claude.ai/schemas/plugin-marketplace.json",
   "name": "axiom-skills",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Shared agent/skill infrastructure for the Axiom Foundation \u2014 pipeline knowledge, craft conventions, and (later) operational agents, reusable across every Axiom repo and harness",
   "owner": {
     "name": "Axiom Foundation",
@@ -44,10 +44,11 @@
       "strict": false,
       "description": "For demo and app builders: Axiom design/demo conventions and writing voice",
       "category": "craft",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "license": "Apache-2.0",
       "skills": [
         "./skills/axiom-design",
+        "./skills/axiom-pdf",
         "./skills/axiom-writing"
       ]
     },
@@ -57,7 +58,7 @@
       "strict": false,
       "description": "Everything in the catalog",
       "category": "core",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "license": "Apache-2.0",
       "skills": [
         "./skills/axiom-ecosystem",
@@ -67,7 +68,8 @@
         "./skills/corpus-usage",
         "./skills/oracles-usage",
         "./skills/axiom-writing",
-        "./skills/axiom-design"
+        "./skills/axiom-design",
+        "./skills/axiom-pdf"
       ],
       "mcpServers": "./mcp/axiom.json"
     }
