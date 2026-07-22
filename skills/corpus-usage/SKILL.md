@@ -24,33 +24,43 @@ durable artifacts are the source snapshots, inventory, provision JSONL, coverage
 reports, and release manifests. Never store executable encodings here; never add
 durable Akoma Ntoso outputs.
 
-## The release-scopes visibility model (the #1 confusion)
+## The named-release visibility model (the #1 confusion)
 
-`corpus.current_provisions` (what the app reads) is a view filtered by
-`corpus.release_scopes`: rows are visible **only if** a matching
-`(jurisdiction, document_class, version)` row exists with `active = true`.
+`corpus.current_provisions` (what the app reads) follows a per-`(jurisdiction,
+document_class)` **active map** (`corpus.active_scope_pointer`). Serving moves
+only when a release is **activated** — three deliberate steps, never as a side
+effect:
 
-- `load-supabase` auto-registers the release-scope row `active=true` by default —
-  "forgot to register" is no longer the silent-hiding failure mode.
-- `--stage` loads with `active=false`; promote later with `publish`, reverse with
-  `unpublish`; find limbo rows with `list-unpublished`.
-- `sync-release-scopes` is upsert-incremental by default; `--exclusive`
-  (deactivate-all-then-reinsert) can silently unpromote work — only when the
-  manifest is the *complete* intended active set.
-- The scope tuple also carries a `release_name` dimension (default `"current"`);
-  `publish`/`unpublish` flags are `--jurisdiction --doc-type [--version] [--release]`.
-- **`navigation_nodes` shares the same version boundary** — public nav reads are
-  limited to active versions, staged nav rows coexist. `verify-release-coverage`
-  exists precisely to catch nav/provision mismatch; run it before promoting.
-- If data "isn't showing up," check release scopes before debugging the extractor.
+- `load-supabase` **stages immutable version rows only; it never changes
+  visibility.** There is no publish-on-load, no scope auto-registration, no
+  mutable `current` release, and no per-scope `publish`/`unpublish` commands —
+  if you remember that model, it's retired.
+- A tracked named selector (`manifests/releases/<name>.json`) is only a cut
+  plan. `scripts/publish_corpus.py` content-addresses and reads back the R2
+  artifacts, checks exact staged provision *and* navigation counts,
+  deep-validates, then creates an Ed25519-signed release object. **Publication
+  does not move serving either.**
+- Activation (`scripts/activate_release.py`, or `publish_corpus.py
+  --activate`) rechecks counts and repoints serving for exactly the
+  `(jurisdiction, document_class)` pairs the release carries — it never
+  un-serves another jurisdiction; overlaps resolve last-activation-wins per
+  pair, and every takeover lands in `corpus.scope_activation_history`. Preview
+  with `--dry-run`.
+- **`navigation_nodes` follows the same active map** — staged nav rows coexist
+  with served ones. `verify-release-coverage` exists precisely to catch
+  nav/provision mismatch; run it before activating.
+- Missing-parent synthesis does not exist: staging a provision whose parent is
+  absent fails as a corpus defect.
+- If data "isn't showing up," check the active map and release before debugging
+  the extractor. Full model: `docs/named-release-publication.md`.
 
 ## Working a state statute (the standard task shape)
 
 One jurisdiction at a time from `manifests/state-statute-agent-queue.yaml`; add or
-repair one source-first adapter **and wire it through `extract-state-statutes-batch`
+repair one source-first adapter **and wire it through `extract-state-statutes`
 or a dedicated CLI command**; a successful task writes **all four scoped artifacts**
 (`sources/`, `inventory/`, `provisions/`, `coverage/`); coverage must be complete
-before proposing release promotion.
+before proposing a release cut.
 
 ## Hard limits
 

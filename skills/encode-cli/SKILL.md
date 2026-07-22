@@ -13,27 +13,44 @@ description: >-
 
 ## Mental model
 
-The AI writes the code; it never gets to grade its own work. Generation backend is
-Codex/gpt-5.5; judges MUST run on a Claude-family model — Claude tiers are reserved
-for orchestration and review, not net-new statutory encoding. `encode --backend
-codex|openai|claude` (default `codex`); eval commands take a separate
-`--gpt-backend codex|openai`.
+The AI writes the code; it never gets to grade its own work. Generation runs on
+a GPT-family backend through the Codex CLI by default, with escalation flags for
+a stronger model on validator-rejected retries; judges MUST run on a
+Claude-family model — Claude tiers are reserved for orchestration, gating, and
+review, not net-new statutory encoding. `encode --backend codex|openai|claude`
+(default `codex`); eval commands take a separate `--gpt-backend codex|openai`.
+Current default/escalation model IDs live in the axiom-encode README — don't
+trust a skill (or your memory) for them.
+
+## The toolchain contract (read this before your first run)
+
+Corpus-backed commands resolve citations **only** through the signed, immutable
+corpus release pinned by the target RuleSpec checkout's `.axiom/toolchain.toml`
+(strict schema: `axiom_corpus_release`, `axiom_corpus_release_content_sha256`,
+`validation_waiver_set_sha256`) — no ambient checkout discovery, no remote
+fallback, no mutable `current`. A checkout still declaring the legacy
+commit-ref schema (a repo mid-migration) **fails toolchain validation by
+design**; that repo's legacy `axiom_encode_version` field names the encoder
+that matches it. Never edit `.axiom/toolchain.toml` in a feature PR — pins move
+only in dedicated gated PRs.
 
 ## The pipeline
 
 ```
-encode "26 USC 32(a)(1)"     # resolves citation → corpus.provisions (local JSONL → Supabase fallback)
-  └─ generates RuleSpec YAML
+encode "26 USC 32(a)(1)"     # resolves citation → exactly one active provision in the
+  └─ generates RuleSpec YAML #   pinned signed corpus release; stops before any model
+                              #   call if the release or an unambiguous row is missing
 validate                      # engine compile
-proof-validate                # explicit proof trees; source-claim IDs resolved against
-                              # axiom-corpus/claims; missing/placeholder claims REJECTED
+proof-validate                # explicit proof trees; atoms must cite immutable
+                              # release-bound corpus text or a hashed RuleSpec import
 <oracle comparison>           # against the pinned axiom-oracles version
 eval-suite                    # manifest benchmarks → readiness gates: success rate,
                               # compile rate, CI pass rate, zero-ungrounded rate,
                               # PE pass rate, mean cost. Exit 0 only if ALL pass.
-encode --apply                # validates in a temp policy-repo overlay, then writes a
-                              # SIGNED JSON apply-manifest (.axiom/encoding-manifests/)
-                              # — requires AXIOM_ENCODE_APPLY_SIGNING_KEY
+encode --apply                # validates in a temp policy-repo overlay, then writes an
+                              # Ed25519 domain-signed apply-manifest ("ed25519-domain-v1")
+                              # under .axiom/encoding-manifests/, via the protected
+                              # signing broker (three-root config)
 ```
 
 ## Rules of the road
@@ -42,8 +59,8 @@ encode --apply                # validates in a temp policy-repo overlay, then wr
    validly signed manifest is rejected by the `guard-generated` check (an
    axiom-encode subcommand that the *consuming policy repo's* CI runs). There is no
    legitimate workflow that edits generated YAML directly.
-2. **Ground or defer.** Modules carry `source_verification.corpus_citation_path`
-   (local corpus artifacts preferred, Supabase is the network fallback). **Grounding
+2. **Ground or defer.** Modules carry `source_verification.corpus_citation_path`,
+   resolved against the pinned signed corpus release. **Grounding
    to a below-statute source (manual, guidance, form, CMS table, state plan)
    *requires* `upstream_source_check`** — status, checked paths, rationale, with at
    least one statute/regulation path checked first; validation rejects without it.
@@ -65,11 +82,14 @@ encode --apply                # validates in a temp policy-repo overlay, then wr
 
 ## Env vars that matter
 
-`AXIOM_ENCODE_APPLY_SIGNING_KEY` (required by `--apply`) · `OPENAI_API_KEY`
-(codex/openai backends) · `ANTHROPIC_API_KEY` (Claude backend + judges) ·
-`CODEX_HOME` / `AXIOM_ENCODE_CODEX_BIN` · `AXIOM_CORPUS_REPO` / `AXIOM_CORPUS_ROOT`
-(corpus resolution) · `AXIOM_ENCODE_SUPABASE_URL` / `AXIOM_ENCODE_SUPABASE_SECRET_KEY`
-(run-log sync) · `AXIOM_JUDGE_MODEL` · `AXIOM_ENCODE_DISABLE_RUN_LOG`.
+`OPENAI_API_KEY` (codex/openai backends; the Codex CLI's `~/.codex/auth.json`
+also satisfies the check) · `ANTHROPIC_API_KEY` (Claude backend + judges) ·
+`CODEX_HOME` / `AXIOM_ENCODE_CODEX_BIN` · `AXIOM_ENCODE_SUPABASE_URL` /
+`AXIOM_ENCODE_SUPABASE_SECRET_KEY` (run-log sync) · `AXIOM_JUDGE_MODEL` ·
+`AXIOM_ENCODE_DISABLE_RUN_LOG`. Corpus resolution takes an explicit
+`--corpus-path` to a canonical local checkout — the old `AXIOM_CORPUS_REPO`/
+`AXIOM_CORPUS_ROOT` env vars are gone, and `AXIOM_ENCODE_APPLY_SIGNING_KEY` is
+the legacy signing path superseded by the protected signing broker.
 
 ## Known limitation queue (as of Jul 2026 — check the issue tracker, these age)
 

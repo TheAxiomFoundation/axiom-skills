@@ -17,9 +17,10 @@ description: >-
 ## The one rule that governs everything
 
 **Never hand-edit statute/regulation/policy YAML in a rulespec repo.** Live RuleSpec is
-installed only via `encode --apply`, which writes an HMAC-signed apply-manifest under
-`.axiom/encoding-manifests/` (note: per-jurisdiction — federal manifests live under
-`us/.axiom/`, state ones under the repo-root `.axiom/`). CI enforcement runs through the
+installed only via `encode --apply`, which writes an Ed25519 domain-signed apply-manifest
+(`ed25519-domain-v1`) under `.axiom/encoding-manifests/` (note: per-jurisdiction —
+federal manifests live under `us/.axiom/`, state ones under the repo-root `.axiom/`).
+CI enforcement runs through the
 org reusable workflow `TheAxiomFoundation/.github/validate-rulespec.yml`, which rejects
 modules that drift from their manifest. If a rule is wrong, fix it through the encoder
 (see encode-cli), not with an editor.
@@ -116,7 +117,12 @@ remove it in the same PR.
 
 ## Governance machinery you must not fight
 
-- `.axiom/toolchain.toml` pins the validation toolchain by commit SHA.
+- `.axiom/toolchain.toml` pins the validation contract. Migrated repos use the
+  strict three-field schema binding one signed, immutable corpus release
+  (`axiom_corpus_release`, `axiom_corpus_release_content_sha256`,
+  `validation_waiver_set_sha256`); repos mid-migration still pin commit SHAs,
+  and current `axiom-encode` rejects that legacy schema by design. Either way,
+  never touch it in a feature PR — pins move only in dedicated gated PRs.
 - `.axiom/index/provisions_to_rules.json` is generated (provision → dependent
   modules); CI fails if stale — regenerate, don't edit. Bulk PRs contend on it:
   rebase, don't merge-fix.
