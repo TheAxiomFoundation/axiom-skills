@@ -25,12 +25,14 @@ propose a skill for axiom-skills instead of borrowing a PE one.
 
 | Concern | Repo | Never put here |
 |---|---|---|
+| Source scrapers (official sites → corpus ingest input) | **axiom-scrapers** | normalization/publication (that's corpus) |
 | Source text + provenance (statutes, regs, guidance) | **axiom-corpus** | executable encodings |
 | Encoder + validation gauntlet | **axiom-encode** | policy content |
 | Encoded law (RuleSpec YAML + companion tests) | **rulespec-\*** country repos | source payloads, generated formula artifacts |
 | Program composition | **axiom-compose** (library) + `programs/` in rulespec repos | program-specific Python |
 | Execution runtime | **axiom-rules-engine** | production policy content (fixtures only) |
 | Cross-engine validation | **axiom-oracles** | product UI |
+| Microsimulation over population data | **axiom-microsim** | policy content |
 | Bill tracking / change signals | **axiom-bills** | encodings |
 | Hosted API + runtime-package registry | **axiom-api** | — |
 | Agent channel | **axiom-mcp** (npm `@axiom-foundation/mcp`) | — |
@@ -55,6 +57,18 @@ R2 credentials: `~/.config/axiom-foundation/r2-credentials.json` · converter ca
 `~/.axiom/` · encoding scratch: `~/.axiom/workspace`. The repo-boundaries map above
 is machine-checked — foundation.org's `repo-map.test.ts` asserts a new repo family
 is a three-part change.
+
+## Contributing from outside the org
+
+RuleSpec generation runs on the Foundation's supervised encoding runtime, and
+content merged into the jurisdiction repos must carry the signed encoding
+manifests that pipeline produces — so externally-run encodes can't merge, and
+that's by design (the admission model is chartered in axiom-encode#1192; the
+encode README's "Who runs this" section says it plainly). External
+contributions land on the platform surfaces instead: scrapers
+(axiom-scrapers), corpus sources and ingest (axiom-corpus), issues on the
+`rulespec-*` repos for wrong or missing encodings, and anything built on the
+published releases.
 
 ## Where knowledge lives
 

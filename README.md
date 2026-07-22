@@ -20,7 +20,7 @@ enable the plugins on first open.
 |---|---|---|
 | `essential` | axiom-ecosystem, rulespec-format, engine-api, axiom-writing + the Axiom MCP server | everyone |
 | `encoding` | encode-cli, corpus-usage, oracles-usage | pipeline contributors |
-| `craft` | axiom-design, axiom-writing | demo/app builders |
+| `craft` | axiom-design, axiom-pdf, axiom-writing | demo/app builders |
 | `complete` | everything | maintainers |
 
 Installing `essential` or `complete` also wires the **Axiom MCP server**
