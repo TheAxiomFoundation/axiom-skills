@@ -34,7 +34,7 @@ calculations against the production API. Set `AXIOM_API_KEY` in your environment
   every session; Claude loads the full skill when a task matches ("new demo" →
   axiom-design; "encode a provision" → encode-cli). Humans don't need to remember
   the catalog — the model does.
-- **The dashboard** — live at https://axiom-skills-sooty.vercel.app (canonical: https://skills.axiom-foundation.org once DNS lands) — is the visual layer for humans: what exists,
+- **The dashboard** — live at https://axiom-skills-sooty.vercel.app (canonical: https://skills.axiom.org once DNS lands) — is the visual layer for humans: what exists,
   which bundle carries it, and search. It renders `data.json`, generated from the
   same manifest the plugin uses, so it can't drift.
 - **Updates flow automatically** — bump versions here; installed plugins update on
