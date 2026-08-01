@@ -36,7 +36,7 @@ propose a skill for axiom-skills instead of borrowing a PE one.
 | Bill tracking / change signals | **axiom-bills** | encodings |
 | Hosted API + runtime-package registry | **axiom-api** | — |
 | Agent channel | **axiom-mcp** (npm `@axiom-foundation/mcp`) | — |
-| Website + Axiom App | **axiom-foundation.org** | request-time GitHub reads (rule: ops `docs/distribution-and-integration-modes.md`; a legacy ISR-cached GitHub fallback still exists in `src/lib/supabase.ts` — don't extend it) |
+| Website + Axiom App | **axiom.org** | request-time GitHub reads (rule: ops `docs/distribution-and-integration-modes.md`; a legacy ISR-cached GitHub fallback still exists in `src/lib/supabase.ts` — don't extend it) |
 | Org skills/agents (this layer) | **axiom-skills** | secrets, dated production stats |
 
 Rule of thumb from axiom-corpus: *"When a provision repeats a value from another
