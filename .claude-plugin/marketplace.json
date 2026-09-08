@@ -15,7 +15,7 @@
       "description": "Baseline for every Axiom repo: RuleSpec format, engine usage, Axiom writing voice, and the Axiom MCP server",
       "category": "core",
       "version": "0.2.1",
-      "license": "Apache-2.0",
+      "license": "MIT",
       "skills": [
         "./skills/axiom-ecosystem",
         "./skills/rulespec-format",
@@ -31,7 +31,7 @@
       "description": "For pipeline contributors: encode CLI + gauntlet discipline, corpus ingestion/publication, oracle/parity validation",
       "category": "pipeline",
       "version": "0.2.1",
-      "license": "Apache-2.0",
+      "license": "MIT",
       "skills": [
         "./skills/encode-cli",
         "./skills/corpus-usage",
@@ -45,7 +45,7 @@
       "description": "For demo and app builders: Axiom design/demo conventions and writing voice",
       "category": "craft",
       "version": "0.3.0",
-      "license": "Apache-2.0",
+      "license": "MIT",
       "skills": [
         "./skills/axiom-design",
         "./skills/axiom-pdf",
@@ -59,7 +59,7 @@
       "description": "Everything in the catalog",
       "category": "core",
       "version": "0.3.1",
-      "license": "Apache-2.0",
+      "license": "MIT",
       "skills": [
         "./skills/axiom-ecosystem",
         "./skills/rulespec-format",
