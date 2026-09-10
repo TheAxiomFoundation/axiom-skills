@@ -74,6 +74,12 @@ agents write back to the team.
 13. **One flagged sentence means a full pass.** When a reviewer strikes one instance
     of any of these, reread the whole document for the same pattern before
     replying. Fixing only the flagged sentence is the failure mode.
+14. **No "X, not Y" and no "instead of Y".** "A claim that it ran, not proof that it
+    passed" → "A declared check tells Receipt only that the producer says it ran."
+    "A fix reaches every future encoding instead of one file" → "A fix reaches every
+    future encoding." State the fact; the negative pole is either invented or already
+    implied. A real limit stays as its own plain sentence ("Receipt does not say which
+    model produced a record").
 
 ## Words to avoid
 
