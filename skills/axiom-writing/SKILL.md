@@ -80,6 +80,16 @@ agents write back to the team.
     future encoding." State the fact; the negative pole is either invented or already
     implied. A real limit stays as its own plain sentence ("Receipt does not say which
     model produced a record").
+15. **Introduce a thing the first time you name it.** "Receipt, our new open-source
+    verifier for records produced by agents, answers those questions" (Ariel's edit,
+    2026-09-10). A name used four times before its noun phrase is the "extremely AI"
+    tell reviewers report.
+16. **Name it or cut it.** A sentence that alludes to something the reader cannot see
+    ("three systems we work on had each answered it in their own code") carries
+    nothing. Either name the systems or delete the sentence.
+17. **One idea per sentence, one pass per reader.** The test is Ariel's: if a reviewer
+    has to read a sentence twice, split it. Three whether-clauses on one verb become
+    three sentences; three questions become three questions.
 
 ## Words to avoid
 
