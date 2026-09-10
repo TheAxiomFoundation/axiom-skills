@@ -41,6 +41,56 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 7. **Active voice, plain sentences, no em-dash-heavy marketing cadence.** Write like
    an auditor who is pleased with the findings.
 
+## Sentences
+
+Rules that came out of the Receipt launch post (2026-09-10), each from a sentence Max
+struck. They apply to every register: blog, README, partner email, and the reports
+agents write back to the team.
+
+8. **Every sentence has an actor doing something.** Not "Trust anchors live in the
+   consumer's committed code, never in configuration a producer could swap" but "The
+   auditor writes the keys and timestamp authorities they trust into their own
+   committed code, where a producer cannot change them." If the subject of the
+   sentence is a concept, find the person or program that acts on it.
+9. **Describe the action, not the scenario name.** Not "A hand edit, a swapped key or
+   a dropped gate refuses with a named reason" but "If someone edits a published file
+   by hand, its bytes no longer match the hash the journal recorded, and Receipt
+   refuses." Test-case labels and paper-table headings are not prose.
+10. **No glosses and no argument pointers.** A sentence whose subject is the text's own
+    word ("Witnessed means…", "in other words", "that is,") or the text's own
+    reasoning ("This is why…", "the point is", "the upshot") has no actor in the
+    world. Give the definition an agent ("Receipt counts a record as witnessed
+    when an outside timestamp authority the auditor chose in advance has recorded
+    it") and let facts carry the argument.
+11. **Two roles, introduced once.** Name the parties a reader needs (the producer,
+    the auditor) and keep to them. A third role that appears once, uninvited
+    ("the consumer"), is a bug. A term of art may appear only in a sentence where an
+    agent does the thing it names; "pinned", "gate", "trust anchor", "base" and
+    "commit" on their own are not plain language.
+12. **Mechanism claims come from the code, read this session.** Before writing what
+    a system does, open the code or the test that does it, and write what you read.
+    A sentence that sounds right and was not checked is the sentence that gets
+    published wrong.
+13. **One flagged sentence means a full pass.** When a reviewer strikes one instance
+    of any of these, reread the whole document for the same pattern before
+    replying. Fixing only the flagged sentence is the failure mode.
+14. **No "X, not Y" and no "instead of Y".** "A claim that it ran, not proof that it
+    passed" → "A declared check tells Receipt only that the producer says it ran."
+    "A fix reaches every future encoding instead of one file" → "A fix reaches every
+    future encoding." State the fact; the negative pole is either invented or already
+    implied. A real limit stays as its own plain sentence ("Receipt does not say which
+    model produced a record").
+15. **Introduce a thing the first time you name it.** "Receipt, our new open-source
+    verifier for records produced by agents, answers those questions" (Ariel's edit,
+    2026-09-10). A name used four times before its noun phrase is the "extremely AI"
+    tell reviewers report.
+16. **Name it or cut it.** A sentence that alludes to something the reader cannot see
+    ("three systems we work on had each answered it in their own code") carries
+    nothing. Either name the systems or delete the sentence.
+17. **One idea per sentence, one pass per reader.** The test is Ariel's: if a reviewer
+    has to read a sentence twice, split it. Three whether-clauses on one verb become
+    three sentences; three questions become three questions.
+
 ## Words to avoid
 
 "revolutionary", "AI-powered" (as a selling point — the gauntlet is the point),
