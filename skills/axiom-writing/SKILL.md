@@ -41,6 +41,40 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 7. **Active voice, plain sentences, no em-dash-heavy marketing cadence.** Write like
    an auditor who is pleased with the findings.
 
+## Sentences
+
+Rules that came out of the Receipt launch post (2026-09-10), each from a sentence Max
+struck. They apply to every register: blog, README, partner email, and the reports
+agents write back to the team.
+
+8. **Every sentence has an actor doing something.** Not "Trust anchors live in the
+   consumer's committed code, never in configuration a producer could swap" but "The
+   auditor writes the keys and timestamp authorities they trust into their own
+   committed code, where a producer cannot change them." If the subject of the
+   sentence is a concept, find the person or program that acts on it.
+9. **Describe the action, not the scenario name.** Not "A hand edit, a swapped key or
+   a dropped gate refuses with a named reason" but "If someone edits a published file
+   by hand, its bytes no longer match the hash the journal recorded, and Receipt
+   refuses." Test-case labels and paper-table headings are not prose.
+10. **No glosses and no argument pointers.** A sentence whose subject is the text's own
+    word ("Witnessed means…", "in other words", "that is,") or the text's own
+    reasoning ("This is why…", "the point is", "the upshot") has no actor in the
+    world. Give the definition an agent ("Receipt counts a record as witnessed
+    when an outside timestamp authority the auditor chose in advance has recorded
+    it") and let facts carry the argument.
+11. **Two roles, introduced once.** Name the parties a reader needs (the producer,
+    the auditor) and keep to them. A third role that appears once, uninvited
+    ("the consumer"), is a bug. A term of art may appear only in a sentence where an
+    agent does the thing it names; "pinned", "gate", "trust anchor", "base" and
+    "commit" on their own are not plain language.
+12. **Mechanism claims come from the code, read this session.** Before writing what
+    a system does, open the code or the test that does it, and write what you read.
+    A sentence that sounds right and was not checked is the sentence that gets
+    published wrong.
+13. **One flagged sentence means a full pass.** When a reviewer strikes one instance
+    of any of these, reread the whole document for the same pattern before
+    replying. Fixing only the flagged sentence is the failure mode.
+
 ## Words to avoid
 
 "revolutionary", "AI-powered" (as a selling point — the gauntlet is the point),
