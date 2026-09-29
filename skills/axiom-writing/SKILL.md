@@ -20,7 +20,7 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 ## Hard rules
 
 1. **"Not encoded" over guessing.** Never imply coverage that doesn't exist. FinBot's
-   grounded side says "not encoded" rather than answering — all copy follows the same
+   grounded side says "not encoded" and does not answer; all copy follows the same
    principle.
 2. **Date and scope every validation claim.** "validated against PolicyEngine" →
    "0 PE mismatches on the full CO population (Jun 2026)". Include the
@@ -82,9 +82,9 @@ Apply them to everything Axiom publishes and to the reports agents write for the
     implied. A real limit stays as its own plain sentence ("Receipt does not say which
     model produced a record").
 15. **Introduce a thing the first time you name it.** Give the name its noun phrase at
-    first mention: "Receipt, our new open source verifier for records produced by
-    agents, collects that machinery in one package." A reader who meets the name
-    before the noun phrase has to guess what it is.
+    first mention: "Receipt, our new open-source verifier for records produced by
+    agents, …". A reader who meets the name before the noun phrase has to guess what
+    it is.
 16. **Name it or cut it.** A sentence that alludes to something the reader cannot see
     ("three systems we work on had each answered it in their own code") carries
     nothing. Either name the systems or delete the sentence.
