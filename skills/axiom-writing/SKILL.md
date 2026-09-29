@@ -22,8 +22,8 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 1. **"Not encoded" over guessing.** Never imply coverage that doesn't exist. FinBot's
    grounded side says "not encoded" rather than answering — all copy follows the same
    principle.
-2. **Date and scope every validation claim.** Not "validated against PolicyEngine"
-   but "0 PE mismatches on the full CO population (Jun 2026)". Include the
+2. **Date and scope every validation claim.** "validated against PolicyEngine" →
+   "0 PE mismatches on the full CO population (Jun 2026)". Include the
    denominator: "3/3 canonical parity cases", "99.52% on US federal income tax".
 3. **Use the product-tier vocabulary exactly**: **GA** (live, supported), **Preview**
    (usable, evolving), **Demo** (curated surface), **Coming** (announced, waitlisted).
@@ -44,17 +44,17 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 ## Sentences
 
 Rules that came out of the Receipt launch post (2026-09-10), each from a sentence Max
-struck. They apply to every register: blog, README, partner email, and the reports
-agents write back to the team.
+struck or a reviewer flagged. Each pair reads struck → rewritten. They apply to every
+register: blog, README, partner email, and the reports agents write back to the team.
 
-8. **Every sentence has an actor doing something.** Not "Trust anchors live in the
-   consumer's committed code, never in configuration a producer could swap" but "The
+8. **Every sentence has an actor doing something.** "Trust anchors live in the
+   consumer's committed code, never in configuration a producer could swap" → "The
    auditor writes the keys and timestamp authorities they trust into their own
    committed code, where a producer cannot change them." If the subject of the
    sentence is a concept, find the person or program that acts on it.
-9. **Describe the action, not the scenario name.** Not "A hand edit, a swapped key or
-   a dropped gate refuses with a named reason" but "If someone edits a published file
-   by hand, its bytes no longer match the hash the journal recorded, and Receipt
+9. **Describe the action, not the scenario name.** "A hand edit, a swapped key or a
+   dropped gate refuses with a named reason" → "If someone edits a published file by
+   hand, its bytes no longer match the hash the journal recorded, and Receipt
    refuses." Test-case labels and paper-table headings are not prose.
 10. **No glosses and no argument pointers.** A sentence whose subject is the text's own
     word ("Witnessed means…", "in other words", "that is,") or the text's own
