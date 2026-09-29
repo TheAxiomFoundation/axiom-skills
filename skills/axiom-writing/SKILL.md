@@ -31,9 +31,9 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 4. **Self-graded packages are labeled as such.** A compiled package with no oracle
    case yet is "compiled and executable; independent validation pending" — never
    "validated".
-5. **Cite the law, not our paraphrase.** When describing what a rule does, link the
-   durable ID / statute citation. The whole pitch is "read the statute next to the
-   code that runs it" — copy should model that behavior.
+5. **Cite the law.** When describing what a rule does, link the durable ID or the
+   statute citation, so the reader can read the statute next to the code that runs
+   it.
 6. **The canonical three-layer explanation** (use it; don't freelance new framings):
    Axiom makes the law itself the software → AI writes the rules, a deterministic
    gauntlet decides what ships (grounding → compile → tests → oracle agreement →
@@ -43,56 +43,57 @@ audience. Neutral, quantitative, citation-forward; no advocacy, no hype adjectiv
 
 ## Sentences
 
-Rules that came out of the Receipt launch post (2026-09-10), each from a sentence Max
-struck or a reviewer flagged. Each pair reads struck → rewritten. They apply to every
-register: blog, README, partner email, and the reports agents write back to the team.
+These rules come from the review of the launch post for Receipt, Axiom's open-source
+verifier for records produced by agents (2026-09-10). Each example pair shows a
+sentence the reviewers struck and the sentence that replaced it: struck → rewritten.
+Apply them to everything Axiom publishes and to the reports agents write for the team.
 
 8. **Every sentence has an actor doing something.** "Trust anchors live in the
    consumer's committed code, never in configuration a producer could swap" → "The
    auditor writes the keys and timestamp authorities they trust into their own
-   committed code, where a producer cannot change them." If the subject of the
+   committed code, where a producer cannot change them." If the subject of a
    sentence is a concept, find the person or program that acts on it.
-9. **Describe the action, not the scenario name.** "A hand edit, a swapped key or a
-   dropped gate refuses with a named reason" → "If someone edits a published file by
-   hand, its bytes no longer match the hash the journal recorded, and Receipt
-   refuses." Test-case labels and paper-table headings are not prose.
+9. **Describe what happens.** "A hand edit, a swapped key or a dropped gate refuses
+   with a named reason" → "If someone edits a published file by hand, its bytes no
+   longer match the hash the journal recorded, and Receipt refuses." A test-case
+   label or a paper-table heading is a name for a scenario; the sentence describes
+   the scenario.
 10. **No glosses and no argument pointers.** A sentence whose subject is the text's own
     word ("Witnessed means…", "in other words", "that is,") or the text's own
     reasoning ("This is why…", "the point is", "the upshot") has no actor in the
-    world. Give the definition an agent ("Receipt counts a record as witnessed
+    world. Give the definition an actor ("Receipt counts a record as witnessed
     when an outside timestamp authority the auditor chose in advance has recorded
-    it") and let facts carry the argument.
-11. **Two roles, introduced once.** Name the parties a reader needs (the producer,
-    the auditor) and keep to them. A third role that appears once, uninvited
-    ("the consumer"), is a bug. A term of art may appear only in a sentence where an
-    agent does the thing it names; "pinned", "gate", "trust anchor", "base" and
-    "commit" on their own are not plain language.
-12. **Mechanism claims come from the code, read this session.** Before writing what
-    a system does, open the code or the test that does it, and write what you read.
-    A sentence that sounds right and was not checked is the sentence that gets
-    published wrong.
-13. **One flagged sentence means a full pass.** When a reviewer strikes one instance
-    of any of these, reread the whole document for the same pattern before
-    replying. Fixing only the flagged sentence is the failure mode.
+    it") and let the facts carry the argument.
+11. **Introduce each role once and keep to it.** Name the parties the reader needs
+    (for Receipt, the producer and the auditor) and use only those names. A role
+    that appears once, uninvited ("the consumer"), is a bug. A term of art belongs
+    only in a sentence where an actor does the thing it names; "pinned", "gate" and
+    "trust anchor" on their own are not plain language.
+12. **Mechanism claims come from the code.** Before you write what a system does,
+    open the code or the test that does it, and write what you read. The sentence
+    nobody checked against the code is the one that ships wrong.
+13. **After one flagged sentence, reread everything.** When a reviewer strikes one
+    instance of any rule here, reread the whole document for the same pattern before
+    you reply. Fixing only the flagged sentence leaves its siblings in place.
 14. **No "X, not Y" and no "instead of Y".** "A claim that it ran, not proof that it
     passed" → "A declared check tells Receipt only that the producer says it ran."
     "A fix reaches every future encoding instead of one file" → "A fix reaches every
     future encoding." State the fact; the negative pole is either invented or already
     implied. A real limit stays as its own plain sentence ("Receipt does not say which
     model produced a record").
-15. **Introduce a thing the first time you name it.** "Receipt, our new open-source
-    verifier for records produced by agents, answers those questions" (Ariel's edit,
-    2026-09-10). A name used four times before its noun phrase is the "extremely AI"
-    tell reviewers report.
+15. **Introduce a thing the first time you name it.** Give the name its noun phrase at
+    first mention: "Receipt, our new open source verifier for records produced by
+    agents, collects that machinery in one package." A reader who meets the name
+    before the noun phrase has to guess what it is.
 16. **Name it or cut it.** A sentence that alludes to something the reader cannot see
     ("three systems we work on had each answered it in their own code") carries
     nothing. Either name the systems or delete the sentence.
-17. **One idea per sentence, one pass per reader.** The test is Ariel's: if a reviewer
-    has to read a sentence twice, split it. Three whether-clauses on one verb become
-    three sentences; three questions become three questions.
+17. **One idea per sentence, one pass per reader.** If a reviewer has to read a
+    sentence twice, split it. Three whether-clauses hanging on one verb become three
+    sentences, each asking its own question.
 
 ## Words to avoid
 
-"revolutionary", "AI-powered" (as a selling point — the gauntlet is the point),
+"revolutionary", "AI-powered" as a selling point (say what the gauntlet checks),
 "guarantees", "always accurate", "replaces caseworkers", "fully validated" (without
 scope+date), "cannot be wrong".
