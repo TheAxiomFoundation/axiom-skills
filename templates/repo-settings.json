@@ -1,5 +1,5 @@
 {
-  "//": "Drop this into <repo>/.claude/settings.json (merge with existing keys). Fresh clones will be prompted to enable the Axiom plugins automatically. Pick bundles per repo type: pipeline repos → essential+encoding; demo/app repos → essential+craft; everything → complete.",
+  "//": "Drop this into <repo>/.claude/settings.json (merge with existing keys). Fresh clones will be prompted to enable the Axiom plugins automatically. Pick bundles per repo type: pipeline repos → essential+encoding; demo/app and proposal repos → essential+craft; everything → complete.",
   "extraKnownMarketplaces": {
     "axiom-skills": {
       "source": {

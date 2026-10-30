@@ -92,6 +92,57 @@ Apply them to everything Axiom publishes and to the reports agents write for the
     sentence twice, split it. Three whether-clauses hanging on one verb become three
     sentences, each asking its own question.
 
+## Grant, partner and policy documents
+
+Apply these rules on top of rules 1–17 to proposals, scopes of work, budget narratives,
+funder updates, partner briefs and policy memos. They adapt a writing and evidence frame
+that Matt Zieger, a program officer, shared publicly in a LinkedIn post (Oct 2026). Social posts skip
+rules 23–27, because evidence labels weigh short copy down. Before a funder-facing
+document goes out, run the `axiom-funder-review` skill. It ships in the `craft` bundle,
+so enable `craft@axiom-skills` in any repo where you write funder documents.
+
+18. **Lead with the answer.** The first paragraph says what the reader gets, by when,
+    and what it depends on. The problem and the context come after it. A program
+    officer who stops after one paragraph should know the ask and the deliverable.
+19. **Simplify the words and keep the conditions.** A shorter sentence keeps every
+    quantity, date, denominator, causal condition and uncertainty that the longer one
+    carried. If a cut removes "if the hire slips" or "in three of five states", put it
+    back.
+20. **Keep paragraphs connected.** Use short sentences inside full paragraphs. Every
+    prose paragraph runs at least two sentences; lists, tables, signature lines and
+    required wording are exempt. Say who benefits and why it matters to the reader, in
+    plain words, so the precision still reads warm.
+21. **Put unavoidable terms of art in one list.** When a document needs more than three
+    terms of art, define them in a short list near the top. Use each term with that one
+    meaning for the rest of the document.
+22. **Exact wording stays exact.** Copy quotes, citations, legal names, contract
+    language, negotiated disclosure language and identifiers character for character.
+    Plain-language rules do not apply to them.
+
+### Evidence
+
+23. **Label the kind of claim when it affects the decision.** Use these words:
+    *measured* (we observed it; give the date and the denominator), *source* (an outside
+    publication, linked), *forecast* (from the operating plan; name the conditions it
+    depends on), *assumption* (a planning input we have not measured yet), and *open
+    question*. A forecast must never read as a commitment, and an assumption must never
+    read as a measurement.
+24. **Put the citation next to the claim.** Every outside statistic carries its link in
+    the same sentence or the same table row. A source list at the end of the document
+    does not satisfy this rule.
+25. **Every number reconciles to one named source.** Budget figures match the budget
+    workbook to the dollar, and seat rows add up to the staff total that the document
+    shows. Dates match the named plan artifact. A comparison with an earlier submission
+    takes the earlier numbers from the filed version. Status words (signed, awarded,
+    committed, in contracting, under discussion) match the actual status. Name each
+    source file and its date at the end of the document.
+26. **Show what would change the conclusion.** Put the conditions a plan depends on in
+    one place. For each condition, give what we know, what we assume, and what happens if
+    it fails. Name the largest gap between a measured rate and a planning assumption.
+27. **Presentation never upgrades evidence.** A clean table or chart must not make a
+    forecast look like a result. Label illustrative values as illustrative. A reader who
+    has the workbook can reproduce every total in the document.
+
 ## Words to avoid
 
 "revolutionary", "AI-powered" as a selling point (say what the gauntlet checks),
