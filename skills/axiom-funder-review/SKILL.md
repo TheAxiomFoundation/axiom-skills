@@ -18,7 +18,7 @@ the `axiom-writing` skill governs how to fix the prose. Report findings first, a
 the document only when the owner asks.
 
 The eight lenses in Step 2 adapt a decision lens that Matt Zieger, a program officer,
-shared publicly (Oct 2026). They describe how one experienced funder reads a proposal.
+shared publicly in a LinkedIn post (Oct 2026). They describe how one experienced funder reads a proposal.
 Use them to find gaps. Do not turn them into a score.
 
 ## Step 1: Reconcile the numbers
@@ -28,7 +28,8 @@ number rereads every other number with less trust.
 
 - **Budget.** Compare each figure with the budget workbook's cell values, never with an
   earlier narrative. Seat rows add up to the staff line. Direct costs plus indirect
-  equal the request. FTE-years recompute from FTE × months for each seat. Rounded seat
+  equal the request. FTE-years equal the sum over seats of FTE × months on the grant ÷ 12 (one
+  full-time seat for twelve months is 1.0 FTE-year). Rounded seat
   figures still add up to the rounded total.
 - **Dates.** Compare each date with the plan artifact the document names.
 - **Changes.** Take every "changed from" figure from the version the funder actually

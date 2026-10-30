@@ -96,9 +96,10 @@ Apply them to everything Axiom publishes and to the reports agents write for the
 
 Apply these rules on top of rules 1–17 to proposals, scopes of work, budget narratives,
 funder updates, partner briefs and policy memos. They adapt a writing and evidence frame
-that Matt Zieger, a program officer, shared publicly (Oct 2026). Social posts skip
+that Matt Zieger, a program officer, shared publicly in a LinkedIn post (Oct 2026). Social posts skip
 rules 23–27, because evidence labels weigh short copy down. Before a funder-facing
-document goes out, run the `axiom-funder-review` skill.
+document goes out, run the `axiom-funder-review` skill. It ships in the `craft` bundle,
+so enable `craft@axiom-skills` in any repo where you write funder documents.
 
 18. **Lead with the answer.** The first paragraph says what the reader gets, by when,
     and what it depends on. The problem and the context come after it. A program
