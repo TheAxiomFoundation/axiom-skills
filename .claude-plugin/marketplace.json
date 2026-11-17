@@ -1,7 +1,7 @@
 {
   "$schema": "https://claude.ai/schemas/plugin-marketplace.json",
   "name": "axiom-skills",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Shared agent/skill infrastructure for the Axiom Foundation — pipeline knowledge, craft conventions, and (later) operational agents, reusable across every Axiom repo and harness",
   "owner": {
     "name": "Axiom Foundation",
@@ -14,7 +14,7 @@
       "strict": false,
       "description": "Baseline for every Axiom repo: RuleSpec format, engine usage, Axiom writing voice, and the Axiom MCP server",
       "category": "core",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "license": "MIT",
       "skills": [
         "./skills/axiom-ecosystem",
@@ -42,14 +42,15 @@
       "name": "craft",
       "source": "./",
       "strict": false,
-      "description": "For demo and app builders: Axiom design/demo conventions and writing voice",
+      "description": "For demo builders and document writers: Axiom design/demo conventions, writing voice, PDF pipeline, and funder review",
       "category": "craft",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "license": "MIT",
       "skills": [
         "./skills/axiom-design",
         "./skills/axiom-pdf",
-        "./skills/axiom-writing"
+        "./skills/axiom-writing",
+        "./skills/axiom-funder-review"
       ]
     },
     {
@@ -58,7 +59,7 @@
       "strict": false,
       "description": "Everything in the catalog",
       "category": "core",
-      "version": "0.3.2",
+      "version": "0.4.0",
       "license": "MIT",
       "skills": [
         "./skills/axiom-ecosystem",
@@ -69,7 +70,8 @@
         "./skills/oracles-usage",
         "./skills/axiom-writing",
         "./skills/axiom-design",
-        "./skills/axiom-pdf"
+        "./skills/axiom-pdf",
+        "./skills/axiom-funder-review"
       ],
       "mcpServers": "./mcp/axiom.json"
     }
