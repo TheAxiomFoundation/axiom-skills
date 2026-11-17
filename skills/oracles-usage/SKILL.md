@@ -5,7 +5,7 @@ description: >-
   oracle results. Covers axiom-oracles adapters, the compare CLI, and the traps.
   Triggers: "parity", "oracle", "compare against PolicyEngine", "TAXSIM", "UKMOD",
   "EUROMOD", "SOUTHMOD", "ACCESS NYC", "mismatch", "golden cases", "contract cases",
-  "populace", "Enhanced CPS", "validation dashboard", "triangulation", "conformance".
+  "Microcosm", "Enhanced CPS", "validation dashboard", "triangulation", "conformance".
 ---
 
 # axiom-oracles — cross-engine validation
@@ -48,10 +48,10 @@ has actually merged before claiming coverage.
    **never HF-latest**, which is a sparse L0 refit that zeroes ~80 engine input bases
    and scores everything against ~$0. If aggregates look absurdly low, check the pin.
 2. **`--population enhanced-cps` is a legacy label** — it resolves to the certified
-   populace artifact, not actual eCPS; the only remaining real-eCPS path is the NYC
-   per-city file (populace has no place/county geography). An unpinned
+   Microcosm artifact, not actual eCPS; the only remaining real-eCPS path is the NYC
+   per-city file (Microcosm has no place/county geography). An unpinned
    `--ecps-dataset populace://…` reference resolves at HF-latest — trap #1.
-3. **Known populace gaps shape coverage**: no immigration/SSN columns (everyone is a
+3. **Known Microcosm gaps shape coverage**: no immigration/SSN columns (everyone is a
    citizen), degenerate housing tenure. Rule branches gated on those inputs are NOT
    exercised — absence of mismatches there is not validation.
 4. **There is no `--tolerance` flag.** Tolerances and priorities are per-concept in
